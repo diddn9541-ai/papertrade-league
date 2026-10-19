@@ -1,0 +1,30 @@
+{
+ "name": "모의투자 리그",
+ "short_name": "리그",
+ "description": "가상 1천만원 모의투자 리그 (실제 돈 아님)",
+ "lang": "ko",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "theme_color": "#0B0B0F",
+ "background_color": "#0B0B0F",
+ "icons": [
+  {
+   "src": "icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
