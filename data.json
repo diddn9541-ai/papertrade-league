@@ -1,0 +1,1095 @@
+{
+ "generated_at": "2026-10-19T07:09:31+00:00",
+ "league": {
+  "start_date": "2026-10-19",
+  "days_elapsed": 0,
+  "evaluation_days": 90,
+  "start_krw": 10000000,
+  "fx": 1331.02,
+  "bench_return_pct": {
+   "QQQ": 0.0,
+   "SPY": 0.0
+  }
+ },
+ "rules": [
+  "1. 가설 검증을 하면서 수익금이 손실보다 크게 하려고 최대한 노력한다",
+  "2. 1번 규칙을 까먹지 않는다."
+ ],
+ "engine_conditions": [
+  "미국 상장 주식·ETF 매수(롱)만 가능",
+  "레버리지·인버스 ETF, 공매도, 옵션, 신용(마진) 불가",
+  "미국 정규장(09:30~16:00 ET, 주말·휴장일 제외)이 열려 있는 동안 처리하면 그 즉시 Yahoo 최신 체결가(regularMarketPrice, 최대 약 15분 지연 가능)에 비용을 더해 체결하고, 장이 닫혀 있으면 다음 정규장 시가에 체결 (체결마다 출처 '장중 최신가'/'시가'와 시각 기록)",
+  "실제 비용 반영: 수수료 0.25% + 환전 스프레드 0.10% + 슬리피지 0.10%(시가 갭 또는 장중 전일 대비 ±7% 이상이면 0.30%), 각 편도",
+  "매수 주문은 가설(시나리오·근거·확인 시점·맞으면·틀리면)이 반드시 있어야 함"
+ ],
+ "players": [
+  {
+   "id": "falcon",
+   "name": "구보규",
+   "color": "#C2661A",
+   "equity_krw": 10000000,
+   "pl_krw": 0,
+   "return_krw_pct": 0.0,
+   "return_usd_pct": -0.06980626400000522,
+   "vs_qqq_pct": -0.06980626400000522,
+   "vs_spy_pct": -0.06980626400000522,
+   "profit_factor": null,
+   "payoff_ratio": null,
+   "biggest_win_krw": 0,
+   "biggest_loss_krw": 0,
+   "gross_gain_krw": 0,
+   "gross_loss_krw": 0,
+   "hit_rate_pct": null,
+   "n_hyp": 3,
+   "n_open": 3,
+   "n_confirmed": 0,
+   "n_refuted": 0,
+   "n_expired": 0,
+   "pl_confirmed_krw": 0,
+   "pl_refuted_krw": 0,
+   "needs_review": [],
+   "max_drawdown_pct": 0.0,
+   "cash_krw": 10000000.0,
+   "rejected": 0,
+   "returned": 1,
+   "orders": 3,
+   "holdings": [],
+   "pending": [
+    {
+     "symbol": "NBIS",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "NVDA",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "VRT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    }
+   ],
+   "equity_hist": [
+    {
+     "date": "2026-10-19",
+     "usd": 7513.04,
+     "krw": 10000000,
+     "pf": null,
+     "hit": null
+    }
+   ],
+   "rank": 1
+  },
+  {
+   "id": "balance",
+   "name": "구본길",
+   "color": "#0E8A94",
+   "equity_krw": 10000000,
+   "pl_krw": 0,
+   "return_krw_pct": 0.0,
+   "return_usd_pct": -0.06980626400000522,
+   "vs_qqq_pct": -0.06980626400000522,
+   "vs_spy_pct": -0.06980626400000522,
+   "profit_factor": null,
+   "payoff_ratio": null,
+   "biggest_win_krw": 0,
+   "biggest_loss_krw": 0,
+   "gross_gain_krw": 0,
+   "gross_loss_krw": 0,
+   "hit_rate_pct": null,
+   "n_hyp": 3,
+   "n_open": 3,
+   "n_confirmed": 0,
+   "n_refuted": 0,
+   "n_expired": 0,
+   "pl_confirmed_krw": 0,
+   "pl_refuted_krw": 0,
+   "needs_review": [],
+   "max_drawdown_pct": 0.0,
+   "cash_krw": 10000000.0,
+   "rejected": 0,
+   "returned": 1,
+   "orders": 3,
+   "holdings": [],
+   "pending": [
+    {
+     "symbol": "NBIS",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "MSFT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "GOOGL",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    }
+   ],
+   "equity_hist": [
+    {
+     "date": "2026-10-19",
+     "usd": 7513.04,
+     "krw": 10000000,
+     "pf": null,
+     "hit": null
+    }
+   ],
+   "rank": 2
+  },
+  {
+   "id": "turtle",
+   "name": "구양우",
+   "color": "#23864F",
+   "equity_krw": 10000000,
+   "pl_krw": 0,
+   "return_krw_pct": 0.0,
+   "return_usd_pct": -0.06980626400000522,
+   "vs_qqq_pct": -0.06980626400000522,
+   "vs_spy_pct": -0.06980626400000522,
+   "profit_factor": null,
+   "payoff_ratio": null,
+   "biggest_win_krw": 0,
+   "biggest_loss_krw": 0,
+   "gross_gain_krw": 0,
+   "gross_loss_krw": 0,
+   "hit_rate_pct": null,
+   "n_hyp": 3,
+   "n_open": 3,
+   "n_confirmed": 0,
+   "n_refuted": 0,
+   "n_expired": 0,
+   "pl_confirmed_krw": 0,
+   "pl_refuted_krw": 0,
+   "needs_review": [],
+   "max_drawdown_pct": 0.0,
+   "cash_krw": 10000000.0,
+   "rejected": 0,
+   "returned": 1,
+   "orders": 3,
+   "holdings": [],
+   "pending": [
+    {
+     "symbol": "MSFT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "VRT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "NBIS",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    }
+   ],
+   "equity_hist": [
+    {
+     "date": "2026-10-19",
+     "usd": 7513.04,
+     "krw": 10000000,
+     "pf": null,
+     "hit": null
+    }
+   ],
+   "rank": 3
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "H0001",
+   "player": "balance",
+   "symbol": "NBIS",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "NBIS가 Q3 실적에서 2026 연간 가이던스를 유지 또는 상향하고 신규 대형 계약/선수금을 발표",
+   "why": "확정계약 400억달러+(MSFT·META), 2026 선수금 90억달러+ 예상, 전환사채 만기 2029년 이후, 하락 원인은 업종 자금조달 불안이지 회사 실적 악화가 아님",
+   "check_by": "2026-11-20 NBIS 3분기 실적 발표 다음 거래일에 판정 (발표일 미확정, 심판 추정 11/10~11/12, 발표가 늦으면 다음 거래일로 재수정)",
+   "confirm_if": "2026 매출 가이던스 하단을 유지하거나 상향하고, ARR 가이던스 범위를 유지·상향하거나 10억달러 이상의 신규 계약을 공시",
+   "refute_if": "2026 매출 가이던스 하단 하향, 또는 분기 중 신주 발행이 기존 주식 수의 5% 이상, 또는 표면금리 8% 이상이거나 총 20억달러 이상의 신규 부채 조달",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-20 Q3 실적(날짜 미확정, ORTEX 11/12 추정)",
+    "confirm_if": "실적 자료에 2026 가이던스 유지/상향 명시, 또는 2027 매출 가이던스 120억달러 이상",
+    "refute_if": "가이던스 하향, 데이터센터 가동 지연 공시, MSFT/META 계약 변경, 고금리 대규모 조달 또는 시장가 증자 가속"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:53+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-20 Q3 실적(날짜 미확정, ORTEX 11/12 추정)",
+       "to": "2026-11-20 NBIS 3분기 실적 발표 다음 거래일에 판정 (발표일 미확정, 심판 추정 11/10~11/12, 발표가 늦으면 다음 거래일로 재수정)"
+      },
+      "confirm_if": {
+       "from": "실적 자료에 2026 가이던스 유지/상향 명시, 또는 2027 매출 가이던스 120억달러 이상",
+       "to": "2026 매출 가이던스 하단을 유지하거나 상향하고, ARR 가이던스 범위를 유지·상향하거나 10억달러 이상의 신규 계약을 공시"
+      },
+      "refute_if": {
+       "from": "가이던스 하향, 데이터센터 가동 지연 공시, MSFT/META 계약 변경, 고금리 대규모 조달 또는 시장가 증자 가속",
+       "to": "2026 매출 가이던스 하단 하향, 또는 분기 중 신주 발행이 기존 주식 수의 5% 이상, 또는 표면금리 8% 이상이거나 총 20억달러 이상의 신규 부채 조달"
+      }
+     },
+     "reason": "레드팀 지적 반영: 반증 조건 수치화. 엔진이 날짜 형식을 요구해 상한일 11/20을 두고, 실제 판정은 발표 다음 거래일. 근거의 확정계약 400억달러+는 공시 재확인 전까지 미확인"
+    }
+   ]
+  },
+  {
+   "id": "H0002",
+   "player": "balance",
+   "symbol": "MSFT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "MSFT가 이번 분기 실적에서 Azure 성장 유지와 AI 용량 공급 부족을 언급하고 설비투자 계획을 유지 또는 상향",
+   "why": "MSFT 4월 분기 토큰 100조+(전년 대비 5배), 1st-party 에이전트 사용 증가, NBIS·IREN의 핵심 고객이라 업종 수요의 원천 확인 가능",
+   "check_by": "2026-10-29 MSFT FY27 1분기 실적(10/28 장후 확정)",
+   "confirm_if": "Azure 성장률이 직전 분기 이상이고, 다음 분기 Azure 가이던스가 이번 분기 성장률보다 2%p 넘게 낮지 않음",
+   "refute_if": "Azure 성장률이 직전 분기보다 2%p 이상 둔화, 또는 FY27 설비투자 가이던스 하향. 둔화 0~2%p는 보류 후 다음 분기에 재판정",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-02 MSFT 분기 실적(10월 말 예정, 날짜 미확인)",
+    "confirm_if": "실적 발표에서 Azure 성장률 유지 또는 가속, 용량 제약 언급, 설비투자 가이던스 유지/상향",
+    "refute_if": "Azure 성장 둔화 명시, 설비투자 축소 또는 AI 용량 과잉 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:43+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-02 MSFT 분기 실적(10월 말 예정, 날짜 미확인)",
+       "to": "2026-10-29 MSFT FY27 1분기 실적(10/28 장후 확정)"
+      },
+      "confirm_if": {
+       "from": "실적 발표에서 Azure 성장률 유지 또는 가속, 용량 제약 언급, 설비투자 가이던스 유지/상향",
+       "to": "Azure 성장률이 직전 분기 이상이고, 다음 분기 Azure 가이던스가 이번 분기 성장률보다 2%p 넘게 낮지 않음"
+      },
+      "refute_if": {
+       "from": "Azure 성장 둔화 명시, 설비투자 축소 또는 AI 용량 과잉 언급",
+       "to": "Azure 성장률이 직전 분기보다 2%p 이상 둔화, 또는 FY27 설비투자 가이던스 하향. 둔화 0~2%p는 보류 후 다음 분기에 재판정"
+      }
+     },
+     "reason": "심판 확정일 반영, 판정 불가능한 정성 문구(AI 용량 과잉 언급) 삭제, 둔화 폭 수치화"
+    }
+   ]
+  },
+  {
+   "id": "H0003",
+   "player": "balance",
+   "symbol": "GOOGL",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Alphabet이 이번 분기 실적에서 토큰 처리량 증가와 클라우드 성장, 2026 설비투자 유지 또는 상향을 발표",
+   "why": "Google 월 3.2경 토큰(5월, 전년 대비 7배), OpenRouter에서 Google 7일 +30%, 빅테크 2026 설비투자 6~7천억달러",
+   "check_by": "2026-10-29 Alphabet 3분기 실적(10/28 장후 확정)",
+   "confirm_if": "Google Cloud 매출 성장률이 직전 분기 이상이고, 2026 설비투자 가이던스를 유지하거나 상향",
+   "refute_if": "Google Cloud 매출 성장률이 직전 분기보다 3%p 이상 둔화, 또는 2026 설비투자 가이던스 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-02 Alphabet 분기 실적(10월 말 예정, 날짜 미확인)",
+    "confirm_if": "실적에서 토큰 처리량 증가 수치 공개 또는 클라우드 성장 가속, 설비투자 유지/상향",
+    "refute_if": "클라우드 성장 둔화, 설비투자 하향, AI 수요 정상화 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:43+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-02 Alphabet 분기 실적(10월 말 예정, 날짜 미확인)",
+       "to": "2026-10-29 Alphabet 3분기 실적(10/28 장후 확정)"
+      },
+      "confirm_if": {
+       "from": "실적에서 토큰 처리량 증가 수치 공개 또는 클라우드 성장 가속, 설비투자 유지/상향",
+       "to": "Google Cloud 매출 성장률이 직전 분기 이상이고, 2026 설비투자 가이던스를 유지하거나 상향"
+      },
+      "refute_if": {
+       "from": "클라우드 성장 둔화, 설비투자 하향, AI 수요 정상화 언급",
+       "to": "Google Cloud 매출 성장률이 직전 분기보다 3%p 이상 둔화, 또는 2026 설비투자 가이던스 하향"
+      }
+     },
+     "reason": "심판 확정일 반영, 공개되지 않을 수 있는 토큰 조건과 정성 문구 삭제, 둔화 폭 수치화"
+    }
+   ]
+  },
+  {
+   "id": "H0004",
+   "player": "falcon",
+   "symbol": "NBIS",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Nebius가 Q3 실적에서 연간 가이던스(매출 30~34억달러, 연말 ARR 70~90억달러)를 유지 또는 상향하고 대형 계약 납품 지연 공시가 없다",
+   "why": "2분기 가이던스 유지, MSFT 약 174억달러·Meta 계약 백로그, 7월 자산담보 대출로 조달 경로 확인; 최근 하락은 조달·희석 공포가 주원인",
+   "check_by": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 외부 추정 11/10~11/12; 회사 공지 나오면 그 다음 거래일로 재수정)",
+   "confirm_if": "3분기 매출 9.05억달러 이상 AND 2026 연간 매출 가이던스 하단 30억달러 이상 유지 AND 연말 ARR 가이던스 하단 70억달러 이상 유지",
+   "refute_if": "위 셋 중 하나라도 미달, 또는 3분기 시작~실적 발표일 사이 발행주식수 3% 이상 증가(신규 증자·ATM 합산), 또는 같은 기간 신규 부채·전환사채 합계 30억달러 이상 또는 표면금리 8% 이상, 또는 MSFT/Meta 계약 납품 지연·해지 공시",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-13 Nebius Q3 실적(일자 미확정, 외부 캘린더 10/22 또는 11/10)",
+    "confirm_if": "실적 자료에 가이던스 유지/상향 명시, 납품 지연·계약 해지 언급 없음",
+    "refute_if": "매출 또는 ARR 가이던스 하향, MSFT/Meta 납품 지연·해지 공시, 또는 실적 전후 시장가 이하 대규모 주식 증자 공시"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:05:04+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-13 Nebius Q3 실적(일자 미확정, 외부 캘린더 10/22 또는 11/10)",
+       "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 외부 추정 11/10~11/12; 회사 공지 나오면 그 다음 거래일로 재수정)"
+      },
+      "confirm_if": {
+       "from": "실적 자료에 가이던스 유지/상향 명시, 납품 지연·계약 해지 언급 없음",
+       "to": "3분기 매출 9.05억달러 이상 AND 2026 연간 매출 가이던스 하단 30억달러 이상 유지 AND 연말 ARR 가이던스 하단 70억달러 이상 유지"
+      },
+      "refute_if": {
+       "from": "매출 또는 ARR 가이던스 하향, MSFT/Meta 납품 지연·해지 공시, 또는 실적 전후 시장가 이하 대규모 주식 증자 공시",
+       "to": "위 셋 중 하나라도 미달, 또는 3분기 시작~실적 발표일 사이 발행주식수 3% 이상 증가(신규 증자·ATM 합산), 또는 같은 기간 신규 부채·전환사채 합계 30억달러 이상 또는 표면금리 8% 이상, 또는 MSFT/Meta 계약 납품 지연·해지 공시"
+      }
+     },
+     "reason": "레드팀 지적 반영: 판정일을 실적 발표 다음 거래일 기준으로, '유지 또는 상향'을 컨센서스·가이던스 하단 수치로, 희석 반증을 증자·부채·금리 수치로 확대"
+    }
+   ]
+  },
+  {
+   "id": "H0005",
+   "player": "falcon",
+   "symbol": "NVDA",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "10/28~10/29 실적에서 MSFT·GOOGL·AMZN이 2026~2027년 AI 설비투자 전망을 유지 또는 상향한다",
+   "why": "에이전트 사용량 증가로 추론 수요가 늘고, 하이퍼스케일러가 용량 부족을 반복 언급",
+   "check_by": "2026-10-30 MSFT·GOOGL(10/28 장후 확정)·AMZN(10/29 장후 확정) 실적",
+   "confirm_if": "3사 중 2곳 이상이 다음 분기 또는 연간(2026/2027) 설비투자 수치 가이던스를 직전 제시치보다 높임",
+   "refute_if": "3사 중 2곳 이상이 설비투자 수치 가이던스를 직전 제시치보다 낮춤(정성적 발언은 판정에서 제외, 유지만 한 경우는 expired로 닫고 교훈 기록)",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-30 MSFT·GOOGL(10/28)·AMZN(10/29 추정) 실적",
+    "confirm_if": "3사 중 2곳 이상이 설비투자 전망 유지/상향 또는 용량 부족 언급",
+    "refute_if": "3사 중 2곳 이상이 설비투자 전망 하향 또는 데이터센터 투자 속도 조절 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:45+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-30 MSFT·GOOGL(10/28)·AMZN(10/29 추정) 실적",
+       "to": "2026-10-30 MSFT·GOOGL(10/28 장후 확정)·AMZN(10/29 장후 확정) 실적"
+      },
+      "confirm_if": {
+       "from": "3사 중 2곳 이상이 설비투자 전망 유지/상향 또는 용량 부족 언급",
+       "to": "3사 중 2곳 이상이 다음 분기 또는 연간(2026/2027) 설비투자 수치 가이던스를 직전 제시치보다 높임"
+      },
+      "refute_if": {
+       "from": "3사 중 2곳 이상이 설비투자 전망 하향 또는 데이터센터 투자 속도 조절 언급",
+       "to": "3사 중 2곳 이상이 설비투자 수치 가이던스를 직전 제시치보다 낮춤(정성적 발언은 판정에서 제외, 유지만 한 경우는 expired로 닫고 교훈 기록)"
+      }
+     },
+     "reason": "레드팀 지적 반영: '유지 또는 상향'은 너무 쉬운 조건이고 '속도 조절 언급'은 정성적이라 수치 변경으로만 판정; AMZN 일자 확정"
+    }
+   ]
+  },
+  {
+   "id": "H0006",
+   "player": "falcon",
+   "symbol": "VRT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Vertiv가 Q3 실적에서 수주(오더)와 백로그 증가를 발표하고 연간 가이던스를 유지 또는 상향한다",
+   "why": "GPU 밀도 증가로 액체냉각·전력 장비가 병목, 네오클라우드·하이퍼스케일러 공통 공급망",
+   "check_by": "2026-10-29 VRT 3분기 실적(10/28 장전 확정)",
+   "confirm_if": "3분기 북투빌(수주÷매출) 1.0 이상 AND 백로그가 전분기 말보다 증가",
+   "refute_if": "북투빌 1.0 미만, 또는 백로그 전분기 대비 감소, 또는 2026 연간 매출 가이던스 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-31 Vertiv Q3 실적(일자 미확인, 10월 하순 예상)",
+    "confirm_if": "오더 또는 백로그 전년 대비 증가, 가이던스 유지/상향",
+    "refute_if": "오더 감소 또는 가이던스 하향, 고객 프로젝트 지연 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:45+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-31 Vertiv Q3 실적(일자 미확인, 10월 하순 예상)",
+       "to": "2026-10-29 VRT 3분기 실적(10/28 장전 확정)"
+      },
+      "confirm_if": {
+       "from": "오더 또는 백로그 전년 대비 증가, 가이던스 유지/상향",
+       "to": "3분기 북투빌(수주÷매출) 1.0 이상 AND 백로그가 전분기 말보다 증가"
+      },
+      "refute_if": {
+       "from": "오더 감소 또는 가이던스 하향, 고객 프로젝트 지연 언급",
+       "to": "북투빌 1.0 미만, 또는 백로그 전분기 대비 감소, 또는 2026 연간 매출 가이던스 하향"
+      }
+     },
+     "reason": "레드팀 지적 반영: 분기 수주 잡음을 줄이려 북투빌·백로그 QoQ로 변경, 실적일 10/28 장전 확정"
+    }
+   ]
+  },
+  {
+   "id": "H0007",
+   "player": "turtle",
+   "symbol": "MSFT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "MSFT가 FY26 Q1 실적에서 Azure 성장 가속 또는 유지와 함께 AI capex 계획을 유지·상향한다",
+   "why": "Foundry 고객 다수가 1조 토큰 이상 처리 궤도, 에이전트 토큰이 사람 토큰의 약 7배(OpenRouter 9월), 네오클라우드와 대형 장기계약 지속",
+   "check_by": "2026-10-29 MSFT 실적(10/28 장후) 다음 거래일",
+   "confirm_if": "Azure 성장률(고정환율)이 직전 분기 대비 하락폭 0%p 이하(유지·가속)이고 FY27 capex 가이던스 수치 하향 없음 (둔화 0~2%p 구간은 적중·반증 아님, 만료 처리 후 교훈 작성)",
+   "refute_if": "Azure 성장률이 직전 분기 대비 2%p 이상 둔화 또는 회사 자체 가이던스 하단 미달, 또는 capex 가이던스 수치 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-30 MSFT 실적(10/28 예정)",
+    "confirm_if": "Azure 성장률이 직전 분기 이상이고 capex 가이던스 유지 또는 상향",
+    "refute_if": "Azure 성장률 둔화 폭이 2%p 이상이거나 capex 축소·데이터센터 계약 연기 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:39+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-30 MSFT 실적(10/28 예정)",
+       "to": "2026-10-29 MSFT 실적(10/28 장후) 다음 거래일"
+      },
+      "confirm_if": {
+       "from": "Azure 성장률이 직전 분기 이상이고 capex 가이던스 유지 또는 상향",
+       "to": "Azure 성장률(고정환율)이 직전 분기 대비 하락폭 0%p 이하(유지·가속)이고 FY27 capex 가이던스 수치 하향 없음 (둔화 0~2%p 구간은 적중·반증 아님, 만료 처리 후 교훈 작성)"
+      },
+      "refute_if": {
+       "from": "Azure 성장률 둔화 폭이 2%p 이상이거나 capex 축소·데이터센터 계약 연기 언급",
+       "to": "Azure 성장률이 직전 분기 대비 2%p 이상 둔화 또는 회사 자체 가이던스 하단 미달, 또는 capex 가이던스 수치 하향"
+      }
+     },
+     "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로"
+    }
+   ]
+  },
+  {
+   "id": "H0008",
+   "player": "turtle",
+   "symbol": "VRT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Vertiv가 Q3 실적에서 수주(orders)와 백로그 증가를 보고하고 연간 가이던스를 유지·상향한다",
+   "why": "하이퍼스케일러 capex 지속, 블랙웰 GPU 임대가 상승(B200 143일 +52.9%, Ornn 10/16)으로 고밀도 냉각 수요",
+   "check_by": "2026-10-28 VRT 실적(장전) 당일 종료 후",
+   "confirm_if": "분기 북투빌(수주÷매출) 1.0 이상 그리고 백로그 전분기 대비 증가 그리고 연간 매출 가이던스 중간값 하향 없음",
+   "refute_if": "북투빌 1.0 미만 또는 백로그 전분기 대비 감소 또는 연간 가이던스 중간값 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-31 Vertiv Q3 실적(날짜 미확인, 10월 말 예상)",
+    "confirm_if": "수주 전년비 증가, 백로그 증가, 가이던스 유지 또는 상향",
+    "refute_if": "수주 감소 또는 가이던스 하향, 데이터센터 프로젝트 지연 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:39+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-31 Vertiv Q3 실적(날짜 미확인, 10월 말 예상)",
+       "to": "2026-10-28 VRT 실적(장전) 당일 종료 후"
+      },
+      "confirm_if": {
+       "from": "수주 전년비 증가, 백로그 증가, 가이던스 유지 또는 상향",
+       "to": "분기 북투빌(수주÷매출) 1.0 이상 그리고 백로그 전분기 대비 증가 그리고 연간 매출 가이던스 중간값 하향 없음"
+      },
+      "refute_if": {
+       "from": "수주 감소 또는 가이던스 하향, 데이터센터 프로젝트 지연 언급",
+       "to": "북투빌 1.0 미만 또는 백로그 전분기 대비 감소 또는 연간 가이던스 중간값 하향"
+      }
+     },
+     "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로"
+    }
+   ]
+  },
+  {
+   "id": "H0009",
+   "player": "turtle",
+   "symbol": "NBIS",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Nebius가 Q3 실적에서 2026 ARR·capex 가이던스를 유지하고 선수금 기반 조달을 이어가며 추가 대형 희석(ATM 증액·신규 유상증자) 없이 분기를 마친다",
+   "why": "6/30 현금 $8.0B, 이연수익 $6.0B, 신규 계약 선수금이 capex 50~60% 커버, 8월 전환사채 $5.75B 조달 완료",
+   "check_by": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 회사 공지 후 날짜 재수정)",
+   "confirm_if": "2026 ARR·capex 가이던스 중간값 유지 이상 그리고 분기 중 발행주식수 증가 3% 미만 그리고 신규 부채·전환사채 조달이 합계 20억달러 미만이며 표면금리 8% 미만",
+   "refute_if": "가이던스 중간값 하향, 또는 분기 중 발행주식수 3% 이상 증가(ATM 포함), 또는 신규 부채·전환사채 20억달러 이상 혹은 표면금리 8% 이상",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-13 NBIS Q3 실적(날짜 미확인)",
+    "confirm_if": "가이던스 유지·상향, ATM 증액이나 신규 증자 공시 없음",
+    "refute_if": "가이던스 하향, ATM 증액·신규 유상증자 공시, 대형 고객 계약 지연·취소"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:50+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-13 NBIS Q3 실적(날짜 미확인)",
+       "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 회사 공지 후 날짜 재수정)"
+      },
+      "confirm_if": {
+       "from": "가이던스 유지·상향, ATM 증액이나 신규 증자 공시 없음",
+       "to": "2026 ARR·capex 가이던스 중간값 유지 이상 그리고 분기 중 발행주식수 증가 3% 미만 그리고 신규 부채·전환사채 조달이 합계 20억달러 미만이며 표면금리 8% 미만"
+      },
+      "refute_if": {
+       "from": "가이던스 하향, ATM 증액·신규 유상증자 공시, 대형 고객 계약 지연·취소",
+       "to": "가이던스 중간값 하향, 또는 분기 중 발행주식수 3% 이상 증가(ATM 포함), 또는 신규 부채·전환사채 20억달러 이상 혹은 표면금리 8% 이상"
+      }
+     },
+     "reason": "레드팀 지적 반영: 희석·조달을 수치 기준으로 교체, 판정일을 실적 발표 다음 거래일로(직전 제출은 날짜 형식 오류)"
+    }
+   ]
+  }
+ ],
+ "events": [
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "kind": "LESSON",
+   "symbol": "",
+   "lesson_id": "L-balance-1",
+   "lesson": "IREN은 지지선 붕괴·시장가 증자 희석·인프라 신뢰성 문제가 겹쳐 반증 조건을 명확히 세우기 어려워 첫 주문에서 제외"
+  },
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "네오클라우드 중 단기 만기 부담이 가장 작고 투자적격 고객 계약 보유",
+   "rule1_check": "반증 조건을 먼저 정하고 현금 45%를 남겨 손실은 작게, 에이전트 수요 가설이 확인되는 종목만 보유를 늘려 이익은 크게",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0001"
+  },
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "symbol": "MSFT",
+   "side": "BUY",
+   "reason": "에이전트 수요가 대형 클라우드 매출로 이어지는지 검증하는 저변동 축",
+   "rule1_check": "반증 조건을 먼저 정하고 현금 45%를 남겨 손실은 작게, 에이전트 수요 가설이 확인되는 종목만 보유를 늘려 이익은 크게",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0002"
+  },
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "symbol": "GOOGL",
+   "side": "BUY",
+   "reason": "토큰 사용량 증가가 가장 크게 확인된 하이퍼스케일러",
+   "rule1_check": "반증 조건을 먼저 정하고 현금 45%를 남겨 손실은 작게, 에이전트 수요 가설이 확인되는 종목만 보유를 늘려 이익은 크게",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0003"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "turtle",
+   "symbol": "MSFT",
+   "side": "BUY",
+   "reason": "에이전트 수요의 최상류 수혜, 자체 현금으로 capex 조달(희석·차환 위험 없음)",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0004"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "turtle",
+   "symbol": "VRT",
+   "side": "BUY",
+   "reason": "데이터센터 전력·냉각 장비, 네오클라우드 자금 문제와 무관하게 하이퍼스케일러 capex 수혜",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0005"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "turtle",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "가설 검증용 소액. 시장은 펀딩 리스크를 크게 반영, 실제 첫 만기는 2029년",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0006"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "falcon",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "네오클라우드 중 계약 질(MSFT·Meta)이 가장 좋고 낙폭이 큼",
+   "rule1_check": "반증 조건을 이벤트로 먼저 정해 틀리면 바로 정리하고(손실 작게), 하이퍼스케일러 설비투자 확대가 맞으면 보유해 이익을 키움; 현금 30% 남겨 실적 이벤트 후 추가",
+   "shares_req": null,
+   "amount_krw": 3000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0004"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "falcon",
+   "symbol": "NVDA",
+   "side": "BUY",
+   "reason": "AI 인프라 수요의 원천 지표",
+   "rule1_check": "반증 조건을 이벤트로 먼저 정해 틀리면 바로 정리하고(손실 작게), 하이퍼스케일러 설비투자 확대가 맞으면 보유해 이익을 키움; 현금 30% 남겨 실적 이벤트 후 추가",
+   "shares_req": null,
+   "amount_krw": 2500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0005"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "falcon",
+   "symbol": "VRT",
+   "side": "BUY",
+   "reason": "데이터센터 전력·냉각 병목 수혜",
+   "rule1_check": "반증 조건을 이벤트로 먼저 정해 틀리면 바로 정리하고(손실 작게), 하이퍼스케일러 설비투자 확대가 맞으면 보유해 이익을 키움; 현금 30% 남겨 실적 이벤트 후 추가",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0006"
+  },
+  {
+   "time": "2026-10-19T06:35:05+00:00",
+   "player": "turtle",
+   "symbol": "MSFT",
+   "side": "BUY",
+   "reason": "에이전트 수요의 최상류 수혜, 자체 현금으로 capex 조달(희석·차환 위험 없음)",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0007"
+  },
+  {
+   "time": "2026-10-19T06:35:05+00:00",
+   "player": "turtle",
+   "symbol": "VRT",
+   "side": "BUY",
+   "reason": "데이터센터 전력·냉각 장비, 네오클라우드 자금 문제와 무관하게 하이퍼스케일러 capex 수혜",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0008"
+  },
+  {
+   "time": "2026-10-19T06:35:05+00:00",
+   "player": "turtle",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "가설 검증용 소액. 시장은 펀딩 리스크를 크게 반영, 실제 첫 만기는 2029년",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0009"
+  },
+  {
+   "time": "2026-10-19T07:04:39+00:00",
+   "player": "turtle",
+   "kind": "AMEND",
+   "symbol": "MSFT",
+   "hypothesis_id": "H0007",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-30 MSFT 실적(10/28 예정)",
+     "to": "2026-10-29 MSFT 실적(10/28 장후) 다음 거래일"
+    },
+    "confirm_if": {
+     "from": "Azure 성장률이 직전 분기 이상이고 capex 가이던스 유지 또는 상향",
+     "to": "Azure 성장률(고정환율)이 직전 분기 대비 하락폭 0%p 이하(유지·가속)이고 FY27 capex 가이던스 수치 하향 없음 (둔화 0~2%p 구간은 적중·반증 아님, 만료 처리 후 교훈 작성)"
+    },
+    "refute_if": {
+     "from": "Azure 성장률 둔화 폭이 2%p 이상이거나 capex 축소·데이터센터 계약 연기 언급",
+     "to": "Azure 성장률이 직전 분기 대비 2%p 이상 둔화 또는 회사 자체 가이던스 하단 미달, 또는 capex 가이던스 수치 하향"
+    }
+   },
+   "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)"
+  },
+  {
+   "time": "2026-10-19T07:04:39+00:00",
+   "player": "turtle",
+   "kind": "AMEND",
+   "symbol": "VRT",
+   "hypothesis_id": "H0008",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-31 Vertiv Q3 실적(날짜 미확인, 10월 말 예상)",
+     "to": "2026-10-28 VRT 실적(장전) 당일 종료 후"
+    },
+    "confirm_if": {
+     "from": "수주 전년비 증가, 백로그 증가, 가이던스 유지 또는 상향",
+     "to": "분기 북투빌(수주÷매출) 1.0 이상 그리고 백로그 전분기 대비 증가 그리고 연간 매출 가이던스 중간값 하향 없음"
+    },
+    "refute_if": {
+     "from": "수주 감소 또는 가이던스 하향, 데이터센터 프로젝트 지연 언급",
+     "to": "북투빌 1.0 미만 또는 백로그 전분기 대비 감소 또는 연간 가이던스 중간값 하향"
+    }
+   },
+   "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)"
+  },
+  {
+   "time": "2026-10-19T07:04:39+00:00",
+   "player": "turtle",
+   "kind": "REJECT",
+   "symbol": "NBIS",
+   "side": "AMEND",
+   "why": "가설 수정 반려: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)",
+   "class": "return",
+   "why_original": "가설 수정 거부: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "reclassified_at": "2026-10-19T07:08:53+00:00"
+  },
+  {
+   "time": "2026-10-19T07:04:43+00:00",
+   "player": "balance",
+   "kind": "REJECT",
+   "symbol": "NBIS",
+   "side": "AMEND",
+   "why": "가설 수정 반려: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다",
+   "class": "return",
+   "why_original": "가설 수정 거부: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "reclassified_at": "2026-10-19T07:08:53+00:00"
+  },
+  {
+   "time": "2026-10-19T07:04:43+00:00",
+   "player": "balance",
+   "kind": "AMEND",
+   "symbol": "MSFT",
+   "hypothesis_id": "H0002",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-02 MSFT 분기 실적(10월 말 예정, 날짜 미확인)",
+     "to": "2026-10-29 MSFT FY27 1분기 실적(10/28 장후 확정)"
+    },
+    "confirm_if": {
+     "from": "실적 발표에서 Azure 성장률 유지 또는 가속, 용량 제약 언급, 설비투자 가이던스 유지/상향",
+     "to": "Azure 성장률이 직전 분기 이상이고, 다음 분기 Azure 가이던스가 이번 분기 성장률보다 2%p 넘게 낮지 않음"
+    },
+    "refute_if": {
+     "from": "Azure 성장 둔화 명시, 설비투자 축소 또는 AI 용량 과잉 언급",
+     "to": "Azure 성장률이 직전 분기보다 2%p 이상 둔화, 또는 FY27 설비투자 가이던스 하향. 둔화 0~2%p는 보류 후 다음 분기에 재판정"
+    }
+   },
+   "reason": "심판 확정일 반영, 판정 불가능한 정성 문구(AI 용량 과잉 언급) 삭제, 둔화 폭 수치화",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다"
+  },
+  {
+   "time": "2026-10-19T07:04:43+00:00",
+   "player": "balance",
+   "kind": "AMEND",
+   "symbol": "GOOGL",
+   "hypothesis_id": "H0003",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-02 Alphabet 분기 실적(10월 말 예정, 날짜 미확인)",
+     "to": "2026-10-29 Alphabet 3분기 실적(10/28 장후 확정)"
+    },
+    "confirm_if": {
+     "from": "실적에서 토큰 처리량 증가 수치 공개 또는 클라우드 성장 가속, 설비투자 유지/상향",
+     "to": "Google Cloud 매출 성장률이 직전 분기 이상이고, 2026 설비투자 가이던스를 유지하거나 상향"
+    },
+    "refute_if": {
+     "from": "클라우드 성장 둔화, 설비투자 하향, AI 수요 정상화 언급",
+     "to": "Google Cloud 매출 성장률이 직전 분기보다 3%p 이상 둔화, 또는 2026 설비투자 가이던스 하향"
+    }
+   },
+   "reason": "심판 확정일 반영, 공개되지 않을 수 있는 토큰 조건과 정성 문구 삭제, 둔화 폭 수치화",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다"
+  },
+  {
+   "time": "2026-10-19T07:04:45+00:00",
+   "player": "falcon",
+   "kind": "REJECT",
+   "symbol": "NBIS",
+   "side": "AMEND",
+   "why": "가설 수정 반려: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함",
+   "class": "return",
+   "why_original": "가설 수정 거부: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "reclassified_at": "2026-10-19T07:08:53+00:00"
+  },
+  {
+   "time": "2026-10-19T07:04:45+00:00",
+   "player": "falcon",
+   "kind": "AMEND",
+   "symbol": "NVDA",
+   "hypothesis_id": "H0005",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-30 MSFT·GOOGL(10/28)·AMZN(10/29 추정) 실적",
+     "to": "2026-10-30 MSFT·GOOGL(10/28 장후 확정)·AMZN(10/29 장후 확정) 실적"
+    },
+    "confirm_if": {
+     "from": "3사 중 2곳 이상이 설비투자 전망 유지/상향 또는 용량 부족 언급",
+     "to": "3사 중 2곳 이상이 다음 분기 또는 연간(2026/2027) 설비투자 수치 가이던스를 직전 제시치보다 높임"
+    },
+    "refute_if": {
+     "from": "3사 중 2곳 이상이 설비투자 전망 하향 또는 데이터센터 투자 속도 조절 언급",
+     "to": "3사 중 2곳 이상이 설비투자 수치 가이던스를 직전 제시치보다 낮춤(정성적 발언은 판정에서 제외, 유지만 한 경우는 expired로 닫고 교훈 기록)"
+    }
+   },
+   "reason": "레드팀 지적 반영: '유지 또는 상향'은 너무 쉬운 조건이고 '속도 조절 언급'은 정성적이라 수치 변경으로만 판정; AMZN 일자 확정",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함"
+  },
+  {
+   "time": "2026-10-19T07:04:45+00:00",
+   "player": "falcon",
+   "kind": "AMEND",
+   "symbol": "VRT",
+   "hypothesis_id": "H0006",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-31 Vertiv Q3 실적(일자 미확인, 10월 하순 예상)",
+     "to": "2026-10-29 VRT 3분기 실적(10/28 장전 확정)"
+    },
+    "confirm_if": {
+     "from": "오더 또는 백로그 전년 대비 증가, 가이던스 유지/상향",
+     "to": "3분기 북투빌(수주÷매출) 1.0 이상 AND 백로그가 전분기 말보다 증가"
+    },
+    "refute_if": {
+     "from": "오더 감소 또는 가이던스 하향, 고객 프로젝트 지연 언급",
+     "to": "북투빌 1.0 미만, 또는 백로그 전분기 대비 감소, 또는 2026 연간 매출 가이던스 하향"
+    }
+   },
+   "reason": "레드팀 지적 반영: 분기 수주 잡음을 줄이려 북투빌·백로그 QoQ로 변경, 실적일 10/28 장전 확정",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함"
+  },
+  {
+   "time": "2026-10-19T07:04:50+00:00",
+   "player": "turtle",
+   "kind": "AMEND",
+   "symbol": "NBIS",
+   "hypothesis_id": "H0009",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-13 NBIS Q3 실적(날짜 미확인)",
+     "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 회사 공지 후 날짜 재수정)"
+    },
+    "confirm_if": {
+     "from": "가이던스 유지·상향, ATM 증액이나 신규 증자 공시 없음",
+     "to": "2026 ARR·capex 가이던스 중간값 유지 이상 그리고 분기 중 발행주식수 증가 3% 미만 그리고 신규 부채·전환사채 조달이 합계 20억달러 미만이며 표면금리 8% 미만"
+    },
+    "refute_if": {
+     "from": "가이던스 하향, ATM 증액·신규 유상증자 공시, 대형 고객 계약 지연·취소",
+     "to": "가이던스 중간값 하향, 또는 분기 중 발행주식수 3% 이상 증가(ATM 포함), 또는 신규 부채·전환사채 20억달러 이상 혹은 표면금리 8% 이상"
+    }
+   },
+   "reason": "레드팀 지적 반영: 희석·조달을 수치 기준으로 교체, 판정일을 실적 발표 다음 거래일로(직전 제출은 날짜 형식 오류)",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)"
+  },
+  {
+   "time": "2026-10-19T07:04:53+00:00",
+   "player": "balance",
+   "kind": "AMEND",
+   "symbol": "NBIS",
+   "hypothesis_id": "H0001",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-20 Q3 실적(날짜 미확정, ORTEX 11/12 추정)",
+     "to": "2026-11-20 NBIS 3분기 실적 발표 다음 거래일에 판정 (발표일 미확정, 심판 추정 11/10~11/12, 발표가 늦으면 다음 거래일로 재수정)"
+    },
+    "confirm_if": {
+     "from": "실적 자료에 2026 가이던스 유지/상향 명시, 또는 2027 매출 가이던스 120억달러 이상",
+     "to": "2026 매출 가이던스 하단을 유지하거나 상향하고, ARR 가이던스 범위를 유지·상향하거나 10억달러 이상의 신규 계약을 공시"
+    },
+    "refute_if": {
+     "from": "가이던스 하향, 데이터센터 가동 지연 공시, MSFT/META 계약 변경, 고금리 대규모 조달 또는 시장가 증자 가속",
+     "to": "2026 매출 가이던스 하단 하향, 또는 분기 중 신주 발행이 기존 주식 수의 5% 이상, 또는 표면금리 8% 이상이거나 총 20억달러 이상의 신규 부채 조달"
+    }
+   },
+   "reason": "레드팀 지적 반영: 반증 조건 수치화. 엔진이 날짜 형식을 요구해 상한일 11/20을 두고, 실제 판정은 발표 다음 거래일. 근거의 확정계약 400억달러+는 공시 재확인 전까지 미확인",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다"
+  },
+  {
+   "time": "2026-10-19T07:05:04+00:00",
+   "player": "falcon",
+   "kind": "AMEND",
+   "symbol": "NBIS",
+   "hypothesis_id": "H0004",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-13 Nebius Q3 실적(일자 미확정, 외부 캘린더 10/22 또는 11/10)",
+     "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 외부 추정 11/10~11/12; 회사 공지 나오면 그 다음 거래일로 재수정)"
+    },
+    "confirm_if": {
+     "from": "실적 자료에 가이던스 유지/상향 명시, 납품 지연·계약 해지 언급 없음",
+     "to": "3분기 매출 9.05억달러 이상 AND 2026 연간 매출 가이던스 하단 30억달러 이상 유지 AND 연말 ARR 가이던스 하단 70억달러 이상 유지"
+    },
+    "refute_if": {
+     "from": "매출 또는 ARR 가이던스 하향, MSFT/Meta 납품 지연·해지 공시, 또는 실적 전후 시장가 이하 대규모 주식 증자 공시",
+     "to": "위 셋 중 하나라도 미달, 또는 3분기 시작~실적 발표일 사이 발행주식수 3% 이상 증가(신규 증자·ATM 합산), 또는 같은 기간 신규 부채·전환사채 합계 30억달러 이상 또는 표면금리 8% 이상, 또는 MSFT/Meta 계약 납품 지연·해지 공시"
+    }
+   },
+   "reason": "레드팀 지적 반영: 판정일을 실적 발표 다음 거래일 기준으로, '유지 또는 상향'을 컨센서스·가이던스 하단 수치로, 희석 반증을 증자·부채·금리 수치로 확대",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함"
+  }
+ ],
+ "bench_hist": {
+  "QQQ": [
+   {
+    "date": "2026-10-19",
+    "close": 709.7999877929688
+   }
+  ],
+  "SPY": [
+   {
+    "date": "2026-10-19",
+    "close": 763.25
+   }
+  ]
+ },
+ "mvp": null,
+ "lessons": [
+  {
+   "id": "L-balance-1",
+   "player": "balance",
+   "date": "2026-10-19",
+   "text": "IREN은 지지선 붕괴·시장가 증자 희석·인프라 신뢰성 문제가 겹쳐 반증 조건을 명확히 세우기 어려워 첫 주문에서 제외",
+   "hypothesis_id": "",
+   "symbol": "",
+   "verdict": "",
+   "scenario": ""
+  }
+ ],
+ "market": {
+  "open": false,
+  "state": "CLOSED",
+  "checked_at": "2026-10-19T07:09:30+00:00",
+  "reason": "정규장 시간 아님 (프리마켓)"
+ },
+ "earnings_confirmed": [
+  {
+   "symbol": "MSFT",
+   "period": "FY27 1분기",
+   "date": "2026-10-28",
+   "when": "(수)",
+   "session": "장후",
+   "source": "https://news.microsoft.com/source/2026/10/07/microsoft-announces-quarterly-earnings-release-date-69/",
+   "checked": "2026-10-19",
+   "status": "확정 (10/7 회사 공지)"
+  },
+  {
+   "symbol": "GOOGL",
+   "period": "2026년 3분기",
+   "date": "2026-10-28",
+   "when": "(수)",
+   "session": "장후",
+   "source": "https://abc.xyz/investor/news/news-details/2026/Alphabet-Announces-Date-of-Third-Quarter-2026-Financial-Results-Conference-Call-2026-8tpGZsLS6v/default.aspx",
+   "checked": "2026-10-19",
+   "status": "확정 (10/6 회사 공지)"
+  },
+  {
+   "symbol": "VRT",
+   "period": "2026년 3분기",
+   "date": "2026-10-28",
+   "when": "(수)",
+   "session": "장전",
+   "source": "https://investors.vertiv.com/news/news-details/2026/Vertiv-Announces-Date-of-Third-Quarter-2026-Earnings-Release-and-Conference-Call/default.aspx",
+   "checked": "2026-10-19",
+   "status": "확정 (10/14 회사 공지)"
+  },
+  {
+   "symbol": "AMZN",
+   "period": "2026년 3분기",
+   "date": "2026-10-29",
+   "when": "(목)",
+   "session": "장후",
+   "source": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-to-Webcast-Third-Quarter-2026-Financial-Results-Conference-Call/",
+   "checked": "2026-10-19",
+   "status": "확정 (10/15 회사 공지)"
+  }
+ ]
+}

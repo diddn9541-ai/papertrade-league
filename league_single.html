@@ -1,0 +1,1648 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0B0F">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex">
+<link rel="preload" href="fonts/Pretendard-Regular.subset.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Pretendard-SemiBold.subset.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="리그">
+<meta name="application-name" content="모의투자 리그">
+<title>모의투자 리그</title>
+<style>/* 모의투자 리그 — 차분한 숫자 중심 UI. 두께 400/600만 사용 */
+@font-face{font-family:"Pretendard";font-weight:400;font-style:normal;font-display:swap;src:url(fonts/Pretendard-Regular.subset.woff2) format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:600;font-style:normal;font-display:swap;src:url(fonts/Pretendard-SemiBold.subset.woff2) format("woff2")}
+:root{
+  --bg:#0B0B0F;--surface:#15161B;--surface2:#1D1F25;--line:#25272E;
+  --t1:#F2F3F5;--t2:#B0B5BF;--t3:#8A909B;
+  --up:#F45A67;--down:#5C9DFF;--accent:#3182F6;--accent-t:#6BA6FF;
+  --warn:#E8A33D;--chip:#22242B;
+  --r:16px;--r-s:12px;--pad:20px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--t1)}
+body{font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;
+  font-size:15px;line-height:1.5;font-weight:400;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere;
+  padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+b,strong,h1,h2,h3{font-weight:600}
+h1,h2,h3,p{margin:0}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.up{color:var(--up)}.down{color:var(--down)}.flat{color:var(--t2)}
+.t2{color:var(--t2)}.t3{color:var(--t3)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+
+#app{max-width:560px;margin:0 auto}
+.view{padding:calc(12px + env(safe-area-inset-top)) var(--pad) 32px;animation:in .18s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* 상단 */
+.top{display:flex;align-items:center;justify-content:space-between;min-height:48px;gap:12px}
+.top h1{font-size:20px;letter-spacing:-.02em}
+.back{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin-left:-12px;border-radius:12px}
+.back svg{width:24px;height:24px;stroke:var(--t1);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.mkt{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:99px;background:var(--chip);font-size:12px;color:var(--t2);white-space:nowrap}
+.mkt i{width:6px;height:6px;border-radius:50%;background:var(--t3)}
+.mkt.on{color:var(--t1)}.mkt.on i{background:var(--up);animation:pulse 1.6s ease-in-out infinite}
+.mkt.stale i{background:var(--warn)}
+@keyframes pulse{50%{opacity:.35}}
+.meta{font-size:12px;color:var(--t3);margin-top:2px}
+.season{display:flex;align-items:center;gap:6px;margin-top:20px;height:36px;padding:0 12px;border-radius:10px;background:var(--surface);font-size:13px;color:var(--t2);width:max-content;max-width:100%}
+.season .dot{color:var(--t3)}
+.sec-first{margin-top:24px}
+
+/* 규칙 한 줄 */
+.rule{margin:20px 0 4px;padding:0 0 20px;border-bottom:1px solid var(--line)}
+.rule .lb{font-size:12px;color:var(--t3);margin-bottom:4px}
+.rule p{font-size:17px;font-weight:600;line-height:1.45;letter-spacing:-.02em}
+.rule .r2{font-size:13px;color:var(--t2);margin-top:6px;font-weight:400}
+
+/* 섹션 */
+.sec{margin-top:32px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.sec-h h2{font-size:17px;letter-spacing:-.02em}
+.sec-h .t3{font-size:13px}
+
+/* 리스트 행 */
+.row{display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 0;border-radius:12px;transition:background .15s var(--ease)}
+a.row:active,button.row:active{background:var(--surface)}
+.row .main{flex:1;min-width:0}
+.row .nm{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .sub{font-size:13px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .rt{text-align:right;flex:none}
+.row .big{font-size:17px;font-weight:600}
+.row .sm{font-size:13px}
+.rank{width:20px;flex:none;text-align:center;font-size:15px;font-weight:600;color:var(--t2)}
+.mono{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;letter-spacing:-.03em}
+.mono.s{width:28px;height:28px;font-size:11px;letter-spacing:-.04em}
+.mono.l{width:48px;height:48px;font-size:19px}
+.tick{flex:none;width:40px;height:40px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--t2);letter-spacing:0}
+.pfl{font-size:11px;color:var(--t3);margin-right:4px;font-weight:400}
+
+/* 카드 */
+.card{background:var(--surface);border-radius:var(--r);padding:16px}
+.card+.card{margin-top:8px}
+.empty{color:var(--t3);font-size:14px;padding:24px 0;text-align:center}
+.note-warn{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border-radius:var(--r-s);padding:12px 14px;font-size:13px;color:var(--t2);margin-top:16px}
+.note-warn i{flex:none;width:6px;height:6px;margin-top:7px;border-radius:50%;background:var(--warn)}
+
+/* 칩 */
+.chip{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:6px;background:var(--chip);font-size:12px;color:var(--t2);white-space:nowrap}
+.chip.ok{background:var(--t1);color:var(--bg);font-weight:600}.chip.no{color:var(--t2);box-shadow:inset 0 0 0 1px var(--line)}.chip.wait{color:var(--t1)}.chip.warn{color:var(--warn)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.filters{display:flex;gap:4px;overflow-x:auto;margin:8px -4px 8px;padding:0 4px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters a{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 4px}
+.filters a span{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:99px;background:var(--chip);color:var(--t2);font-size:14px;transition:background .15s,color .15s}
+.filters a.on span{background:var(--t1);color:var(--bg);font-weight:600}
+
+/* 플레이어 헤더 */
+.ph{margin-top:8px}
+.ph .who{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--t2)}
+.ph .eq{font-size:32px;font-weight:600;letter-spacing:-.03em;margin-top:12px;line-height:1.2}
+.ph .pl{font-size:15px;margin-top:2px}
+.ph .vs{font-size:13px;color:var(--t3);margin-top:2px}
+
+/* 차트 */
+.chart{position:relative;margin:16px calc(-1 * var(--pad)) 0;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.chart svg{display:block;width:100%;height:200px;overflow:visible}
+.chart .tip{position:absolute;top:-4px;transform:translateX(-50%);background:var(--surface2);border-radius:8px;padding:4px 8px;font-size:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .12s}
+.chart.scrub .tip{opacity:1}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--t3);margin-top:8px}
+.legend i{display:inline-block;width:12px;height:2px;border-radius:2px;vertical-align:middle;margin-right:6px}
+
+/* 지표 그리드 */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);row-gap:16px;column-gap:12px;background:var(--surface);border-radius:var(--r);padding:16px;margin-top:24px}
+.stats>div{min-width:0}
+.stats .lb{font-size:12px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stats .v{font-size:17px;font-weight:600;margin-top:2px;white-space:nowrap}
+
+/* 가설 카드 */
+.hyp{background:var(--surface);border-radius:var(--r);padding:16px}
+.hyp+.hyp{margin-top:8px}
+.hyp .hd{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hyp .sym{font-size:13px;color:var(--t2);font-weight:600}
+.hyp h3{font-size:16px;line-height:1.45;margin:8px 0 12px;letter-spacing:-.02em}
+.hyp .ln{display:flex;gap:10px;font-size:14px;line-height:1.5;padding:2px 0}
+.hyp .ln b{flex:none;width:44px;font-size:13px;color:var(--t3);font-weight:400;padding-top:1px}
+.hyp details{margin-top:8px;border-top:1px solid var(--line)}
+.hyp summary{list-style:none;display:flex;align-items:center;justify-content:space-between;min-height:44px;font-size:13px;color:var(--t2);cursor:pointer}
+.hyp summary::-webkit-details-marker{display:none}
+.hyp summary::after{content:"";width:8px;height:8px;border-right:1.5px solid var(--t3);border-bottom:1.5px solid var(--t3);transform:rotate(45deg) translateY(-3px);transition:transform .18s var(--ease)}
+.hyp details[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.hyp details .body{font-size:14px;color:var(--t2);padding-bottom:8px}
+.hyp .ft{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:13px;color:var(--t3)}
+.hyp .res{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px}
+.hyp .res .lb{font-size:12px;color:var(--t3)}
+.amend{font-size:13px;color:var(--t2);padding:6px 0;border-top:1px dashed var(--line)}
+.amend:first-child{border-top:0}
+.amend .old{text-decoration:line-through;color:var(--t3)}
+
+/* 세그먼트 */
+.seg{display:flex;background:var(--chip);border-radius:10px;padding:3px;margin:8px 0 12px}
+.seg a{flex:1;text-align:center;min-height:38px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:14px;color:var(--t2);transition:background .15s,color .15s}
+.seg a.on{background:var(--surface2);color:var(--t1);font-weight:600}
+
+/* 타임라인 */
+.day{font-size:13px;color:var(--t3);margin:24px 0 4px;font-weight:600}
+.day:first-child{margin-top:8px}
+.ev{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ev:last-child{border-bottom:0}
+.ev .tm{flex:none;width:40px;font-size:13px;color:var(--t3);padding-top:2px}
+.ev .bd{flex:1;min-width:0}
+.ev .l1{display:flex;align-items:center;gap:8px;font-size:15px}
+.ev .l1 .amt{margin-left:auto;font-weight:600;white-space:nowrap}
+.ev .l2{font-size:13px;color:var(--t3);margin-top:2px}
+.ev .hq{font-size:13px;color:var(--t2);margin-top:4px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ev.vd .bd{border-left:2px solid var(--line);padding-left:12px}
+.ev.vd.ok .bd{border-left-color:var(--t2)}.ev.vd.no .bd{border-left-color:var(--line)}
+.ev .lesson{font-size:14px;margin-top:6px}
+
+/* 오답노트 */
+.lsn{padding:16px 0;border-bottom:1px solid var(--line)}
+.lsn:last-child{border-bottom:0}
+.lsn .hd{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3)}
+.lsn p{font-size:16px;line-height:1.55;margin-top:8px;letter-spacing:-.015em}
+.lsn .sc{font-size:13px;color:var(--t3);margin-top:6px}
+
+/* 규칙 화면 */
+.rl{font-size:15px;line-height:1.6;color:var(--t2);padding-left:18px;margin:0}
+.rl li{margin:6px 0}
+.big-rule{font-size:20px;font-weight:600;line-height:1.45;letter-spacing:-.02em}
+.erow{display:flex;align-items:center;justify-content:space-between;min-height:52px;border-bottom:1px solid var(--line);font-size:15px}
+.erow:last-child{border-bottom:0}
+.erow .sub{font-size:12px;color:var(--t3)}
+.disc{font-size:12px;color:var(--t3);line-height:1.6;margin-top:32px}
+
+/* 탭바 */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.tabbar a{flex:1;max-width:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:60px;font-size:11px;color:var(--t3);transition:color .15s}
+.tabbar svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.tabbar a.on{color:var(--t1)}
+.tabbar a.on span{font-weight:600}
+
+/* 스켈레톤 */
+.sk{background:var(--surface);border-radius:10px;margin-bottom:12px;position:relative;overflow:hidden}
+.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);animation:sh 1.2s infinite}
+@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.sk-t{height:28px;width:45%;margin-top:12px}.sk-s{height:16px;width:70%}.sk-b{height:64px;margin:24px 0}.sk-r{height:56px}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.ev .who{color:var(--t2)}
+.ev .lesson .lb{font-size:12px;color:var(--t3);margin-right:6px}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite">
+  <div class="view skel" aria-hidden="true">
+    <div class="sk sk-t"></div><div class="sk sk-s"></div>
+    <div class="sk sk-b"></div>
+    <div class="sk sk-r"></div><div class="sk sk-r"></div><div class="sk sk-r"></div>
+  </div>
+</main>
+<nav class="tabbar" aria-label="주요 메뉴">
+  <a href="#/" data-tab="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg><span>홈</span></a>
+  <a href="#/feed" data-tab="feed"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2.5-6 5 12L17 12h4"/></svg><span>중계</span></a>
+  <a href="#/notes/all" data-tab="notes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.3 5.2 7.8 4.5 4 4.5v13c3.8 0 6.3.7 8 2 1.7-1.3 4.2-2 8-2v-13c-3.8 0-6.3.7-8 2zM12 6.5v13"/></svg><span>오답노트</span></a>
+  <a href="#/rules" data-tab="rules"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20zM14 3.5V8h4M9.5 12.5h5M9.5 16h5"/></svg><span>규칙</span></a>
+</nav>
+<script>window.__LEAGUE_DATA__={
+ "generated_at": "2026-10-19T07:09:30+00:00",
+ "league": {
+  "start_date": "2026-10-19",
+  "days_elapsed": 0,
+  "evaluation_days": 90,
+  "start_krw": 10000000,
+  "fx": 1331.02,
+  "bench_return_pct": {
+   "QQQ": 0.0,
+   "SPY": 0.0
+  }
+ },
+ "rules": [
+  "1. 가설 검증을 하면서 수익금이 손실보다 크게 하려고 최대한 노력한다",
+  "2. 1번 규칙을 까먹지 않는다."
+ ],
+ "engine_conditions": [
+  "미국 상장 주식·ETF 매수(롱)만 가능",
+  "레버리지·인버스 ETF, 공매도, 옵션, 신용(마진) 불가",
+  "미국 정규장(09:30~16:00 ET, 주말·휴장일 제외)이 열려 있는 동안 처리하면 그 즉시 Yahoo 최신 체결가(regularMarketPrice, 최대 약 15분 지연 가능)에 비용을 더해 체결하고, 장이 닫혀 있으면 다음 정규장 시가에 체결 (체결마다 출처 '장중 최신가'/'시가'와 시각 기록)",
+  "실제 비용 반영: 수수료 0.25% + 환전 스프레드 0.10% + 슬리피지 0.10%(시가 갭 또는 장중 전일 대비 ±7% 이상이면 0.30%), 각 편도",
+  "매수 주문은 가설(시나리오·근거·확인 시점·맞으면·틀리면)이 반드시 있어야 함"
+ ],
+ "players": [
+  {
+   "id": "falcon",
+   "name": "구보규",
+   "color": "#C2661A",
+   "equity_krw": 10000000,
+   "pl_krw": 0,
+   "return_krw_pct": 0.0,
+   "return_usd_pct": -0.06980626400000522,
+   "vs_qqq_pct": -0.06980626400000522,
+   "vs_spy_pct": -0.06980626400000522,
+   "profit_factor": null,
+   "payoff_ratio": null,
+   "biggest_win_krw": 0,
+   "biggest_loss_krw": 0,
+   "gross_gain_krw": 0,
+   "gross_loss_krw": 0,
+   "hit_rate_pct": null,
+   "n_hyp": 3,
+   "n_open": 3,
+   "n_confirmed": 0,
+   "n_refuted": 0,
+   "n_expired": 0,
+   "pl_confirmed_krw": 0,
+   "pl_refuted_krw": 0,
+   "needs_review": [],
+   "max_drawdown_pct": 0.0,
+   "cash_krw": 10000000.0,
+   "rejected": 0,
+   "returned": 1,
+   "orders": 3,
+   "holdings": [],
+   "pending": [
+    {
+     "symbol": "NBIS",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "NVDA",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "VRT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    }
+   ],
+   "equity_hist": [
+    {
+     "date": "2026-10-19",
+     "usd": 7513.04,
+     "krw": 10000000,
+     "pf": null,
+     "hit": null
+    }
+   ],
+   "rank": 1
+  },
+  {
+   "id": "balance",
+   "name": "구본길",
+   "color": "#0E8A94",
+   "equity_krw": 10000000,
+   "pl_krw": 0,
+   "return_krw_pct": 0.0,
+   "return_usd_pct": -0.06980626400000522,
+   "vs_qqq_pct": -0.06980626400000522,
+   "vs_spy_pct": -0.06980626400000522,
+   "profit_factor": null,
+   "payoff_ratio": null,
+   "biggest_win_krw": 0,
+   "biggest_loss_krw": 0,
+   "gross_gain_krw": 0,
+   "gross_loss_krw": 0,
+   "hit_rate_pct": null,
+   "n_hyp": 3,
+   "n_open": 3,
+   "n_confirmed": 0,
+   "n_refuted": 0,
+   "n_expired": 0,
+   "pl_confirmed_krw": 0,
+   "pl_refuted_krw": 0,
+   "needs_review": [],
+   "max_drawdown_pct": 0.0,
+   "cash_krw": 10000000.0,
+   "rejected": 0,
+   "returned": 1,
+   "orders": 3,
+   "holdings": [],
+   "pending": [
+    {
+     "symbol": "NBIS",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "MSFT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "GOOGL",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    }
+   ],
+   "equity_hist": [
+    {
+     "date": "2026-10-19",
+     "usd": 7513.04,
+     "krw": 10000000,
+     "pf": null,
+     "hit": null
+    }
+   ],
+   "rank": 2
+  },
+  {
+   "id": "turtle",
+   "name": "구양우",
+   "color": "#23864F",
+   "equity_krw": 10000000,
+   "pl_krw": 0,
+   "return_krw_pct": 0.0,
+   "return_usd_pct": -0.06980626400000522,
+   "vs_qqq_pct": -0.06980626400000522,
+   "vs_spy_pct": -0.06980626400000522,
+   "profit_factor": null,
+   "payoff_ratio": null,
+   "biggest_win_krw": 0,
+   "biggest_loss_krw": 0,
+   "gross_gain_krw": 0,
+   "gross_loss_krw": 0,
+   "hit_rate_pct": null,
+   "n_hyp": 3,
+   "n_open": 3,
+   "n_confirmed": 0,
+   "n_refuted": 0,
+   "n_expired": 0,
+   "pl_confirmed_krw": 0,
+   "pl_refuted_krw": 0,
+   "needs_review": [],
+   "max_drawdown_pct": 0.0,
+   "cash_krw": 10000000.0,
+   "rejected": 0,
+   "returned": 1,
+   "orders": 3,
+   "holdings": [],
+   "pending": [
+    {
+     "symbol": "MSFT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "VRT",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    },
+    {
+     "symbol": "NBIS",
+     "side": "BUY",
+     "submit_date": "2026-10-19"
+    }
+   ],
+   "equity_hist": [
+    {
+     "date": "2026-10-19",
+     "usd": 7513.04,
+     "krw": 10000000,
+     "pf": null,
+     "hit": null
+    }
+   ],
+   "rank": 3
+  }
+ ],
+ "hypotheses": [
+  {
+   "id": "H0001",
+   "player": "balance",
+   "symbol": "NBIS",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "NBIS가 Q3 실적에서 2026 연간 가이던스를 유지 또는 상향하고 신규 대형 계약/선수금을 발표",
+   "why": "확정계약 400억달러+(MSFT·META), 2026 선수금 90억달러+ 예상, 전환사채 만기 2029년 이후, 하락 원인은 업종 자금조달 불안이지 회사 실적 악화가 아님",
+   "check_by": "2026-11-20 NBIS 3분기 실적 발표 다음 거래일에 판정 (발표일 미확정, 심판 추정 11/10~11/12, 발표가 늦으면 다음 거래일로 재수정)",
+   "confirm_if": "2026 매출 가이던스 하단을 유지하거나 상향하고, ARR 가이던스 범위를 유지·상향하거나 10억달러 이상의 신규 계약을 공시",
+   "refute_if": "2026 매출 가이던스 하단 하향, 또는 분기 중 신주 발행이 기존 주식 수의 5% 이상, 또는 표면금리 8% 이상이거나 총 20억달러 이상의 신규 부채 조달",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-20 Q3 실적(날짜 미확정, ORTEX 11/12 추정)",
+    "confirm_if": "실적 자료에 2026 가이던스 유지/상향 명시, 또는 2027 매출 가이던스 120억달러 이상",
+    "refute_if": "가이던스 하향, 데이터센터 가동 지연 공시, MSFT/META 계약 변경, 고금리 대규모 조달 또는 시장가 증자 가속"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:53+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-20 Q3 실적(날짜 미확정, ORTEX 11/12 추정)",
+       "to": "2026-11-20 NBIS 3분기 실적 발표 다음 거래일에 판정 (발표일 미확정, 심판 추정 11/10~11/12, 발표가 늦으면 다음 거래일로 재수정)"
+      },
+      "confirm_if": {
+       "from": "실적 자료에 2026 가이던스 유지/상향 명시, 또는 2027 매출 가이던스 120억달러 이상",
+       "to": "2026 매출 가이던스 하단을 유지하거나 상향하고, ARR 가이던스 범위를 유지·상향하거나 10억달러 이상의 신규 계약을 공시"
+      },
+      "refute_if": {
+       "from": "가이던스 하향, 데이터센터 가동 지연 공시, MSFT/META 계약 변경, 고금리 대규모 조달 또는 시장가 증자 가속",
+       "to": "2026 매출 가이던스 하단 하향, 또는 분기 중 신주 발행이 기존 주식 수의 5% 이상, 또는 표면금리 8% 이상이거나 총 20억달러 이상의 신규 부채 조달"
+      }
+     },
+     "reason": "레드팀 지적 반영: 반증 조건 수치화. 엔진이 날짜 형식을 요구해 상한일 11/20을 두고, 실제 판정은 발표 다음 거래일. 근거의 확정계약 400억달러+는 공시 재확인 전까지 미확인"
+    }
+   ]
+  },
+  {
+   "id": "H0002",
+   "player": "balance",
+   "symbol": "MSFT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "MSFT가 이번 분기 실적에서 Azure 성장 유지와 AI 용량 공급 부족을 언급하고 설비투자 계획을 유지 또는 상향",
+   "why": "MSFT 4월 분기 토큰 100조+(전년 대비 5배), 1st-party 에이전트 사용 증가, NBIS·IREN의 핵심 고객이라 업종 수요의 원천 확인 가능",
+   "check_by": "2026-10-29 MSFT FY27 1분기 실적(10/28 장후 확정)",
+   "confirm_if": "Azure 성장률이 직전 분기 이상이고, 다음 분기 Azure 가이던스가 이번 분기 성장률보다 2%p 넘게 낮지 않음",
+   "refute_if": "Azure 성장률이 직전 분기보다 2%p 이상 둔화, 또는 FY27 설비투자 가이던스 하향. 둔화 0~2%p는 보류 후 다음 분기에 재판정",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-02 MSFT 분기 실적(10월 말 예정, 날짜 미확인)",
+    "confirm_if": "실적 발표에서 Azure 성장률 유지 또는 가속, 용량 제약 언급, 설비투자 가이던스 유지/상향",
+    "refute_if": "Azure 성장 둔화 명시, 설비투자 축소 또는 AI 용량 과잉 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:43+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-02 MSFT 분기 실적(10월 말 예정, 날짜 미확인)",
+       "to": "2026-10-29 MSFT FY27 1분기 실적(10/28 장후 확정)"
+      },
+      "confirm_if": {
+       "from": "실적 발표에서 Azure 성장률 유지 또는 가속, 용량 제약 언급, 설비투자 가이던스 유지/상향",
+       "to": "Azure 성장률이 직전 분기 이상이고, 다음 분기 Azure 가이던스가 이번 분기 성장률보다 2%p 넘게 낮지 않음"
+      },
+      "refute_if": {
+       "from": "Azure 성장 둔화 명시, 설비투자 축소 또는 AI 용량 과잉 언급",
+       "to": "Azure 성장률이 직전 분기보다 2%p 이상 둔화, 또는 FY27 설비투자 가이던스 하향. 둔화 0~2%p는 보류 후 다음 분기에 재판정"
+      }
+     },
+     "reason": "심판 확정일 반영, 판정 불가능한 정성 문구(AI 용량 과잉 언급) 삭제, 둔화 폭 수치화"
+    }
+   ]
+  },
+  {
+   "id": "H0003",
+   "player": "balance",
+   "symbol": "GOOGL",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Alphabet이 이번 분기 실적에서 토큰 처리량 증가와 클라우드 성장, 2026 설비투자 유지 또는 상향을 발표",
+   "why": "Google 월 3.2경 토큰(5월, 전년 대비 7배), OpenRouter에서 Google 7일 +30%, 빅테크 2026 설비투자 6~7천억달러",
+   "check_by": "2026-10-29 Alphabet 3분기 실적(10/28 장후 확정)",
+   "confirm_if": "Google Cloud 매출 성장률이 직전 분기 이상이고, 2026 설비투자 가이던스를 유지하거나 상향",
+   "refute_if": "Google Cloud 매출 성장률이 직전 분기보다 3%p 이상 둔화, 또는 2026 설비투자 가이던스 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-02 Alphabet 분기 실적(10월 말 예정, 날짜 미확인)",
+    "confirm_if": "실적에서 토큰 처리량 증가 수치 공개 또는 클라우드 성장 가속, 설비투자 유지/상향",
+    "refute_if": "클라우드 성장 둔화, 설비투자 하향, AI 수요 정상화 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:43+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-02 Alphabet 분기 실적(10월 말 예정, 날짜 미확인)",
+       "to": "2026-10-29 Alphabet 3분기 실적(10/28 장후 확정)"
+      },
+      "confirm_if": {
+       "from": "실적에서 토큰 처리량 증가 수치 공개 또는 클라우드 성장 가속, 설비투자 유지/상향",
+       "to": "Google Cloud 매출 성장률이 직전 분기 이상이고, 2026 설비투자 가이던스를 유지하거나 상향"
+      },
+      "refute_if": {
+       "from": "클라우드 성장 둔화, 설비투자 하향, AI 수요 정상화 언급",
+       "to": "Google Cloud 매출 성장률이 직전 분기보다 3%p 이상 둔화, 또는 2026 설비투자 가이던스 하향"
+      }
+     },
+     "reason": "심판 확정일 반영, 공개되지 않을 수 있는 토큰 조건과 정성 문구 삭제, 둔화 폭 수치화"
+    }
+   ]
+  },
+  {
+   "id": "H0004",
+   "player": "falcon",
+   "symbol": "NBIS",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Nebius가 Q3 실적에서 연간 가이던스(매출 30~34억달러, 연말 ARR 70~90억달러)를 유지 또는 상향하고 대형 계약 납품 지연 공시가 없다",
+   "why": "2분기 가이던스 유지, MSFT 약 174억달러·Meta 계약 백로그, 7월 자산담보 대출로 조달 경로 확인; 최근 하락은 조달·희석 공포가 주원인",
+   "check_by": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 외부 추정 11/10~11/12; 회사 공지 나오면 그 다음 거래일로 재수정)",
+   "confirm_if": "3분기 매출 9.05억달러 이상 AND 2026 연간 매출 가이던스 하단 30억달러 이상 유지 AND 연말 ARR 가이던스 하단 70억달러 이상 유지",
+   "refute_if": "위 셋 중 하나라도 미달, 또는 3분기 시작~실적 발표일 사이 발행주식수 3% 이상 증가(신규 증자·ATM 합산), 또는 같은 기간 신규 부채·전환사채 합계 30억달러 이상 또는 표면금리 8% 이상, 또는 MSFT/Meta 계약 납품 지연·해지 공시",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-13 Nebius Q3 실적(일자 미확정, 외부 캘린더 10/22 또는 11/10)",
+    "confirm_if": "실적 자료에 가이던스 유지/상향 명시, 납품 지연·계약 해지 언급 없음",
+    "refute_if": "매출 또는 ARR 가이던스 하향, MSFT/Meta 납품 지연·해지 공시, 또는 실적 전후 시장가 이하 대규모 주식 증자 공시"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:05:04+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-13 Nebius Q3 실적(일자 미확정, 외부 캘린더 10/22 또는 11/10)",
+       "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 외부 추정 11/10~11/12; 회사 공지 나오면 그 다음 거래일로 재수정)"
+      },
+      "confirm_if": {
+       "from": "실적 자료에 가이던스 유지/상향 명시, 납품 지연·계약 해지 언급 없음",
+       "to": "3분기 매출 9.05억달러 이상 AND 2026 연간 매출 가이던스 하단 30억달러 이상 유지 AND 연말 ARR 가이던스 하단 70억달러 이상 유지"
+      },
+      "refute_if": {
+       "from": "매출 또는 ARR 가이던스 하향, MSFT/Meta 납품 지연·해지 공시, 또는 실적 전후 시장가 이하 대규모 주식 증자 공시",
+       "to": "위 셋 중 하나라도 미달, 또는 3분기 시작~실적 발표일 사이 발행주식수 3% 이상 증가(신규 증자·ATM 합산), 또는 같은 기간 신규 부채·전환사채 합계 30억달러 이상 또는 표면금리 8% 이상, 또는 MSFT/Meta 계약 납품 지연·해지 공시"
+      }
+     },
+     "reason": "레드팀 지적 반영: 판정일을 실적 발표 다음 거래일 기준으로, '유지 또는 상향'을 컨센서스·가이던스 하단 수치로, 희석 반증을 증자·부채·금리 수치로 확대"
+    }
+   ]
+  },
+  {
+   "id": "H0005",
+   "player": "falcon",
+   "symbol": "NVDA",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "10/28~10/29 실적에서 MSFT·GOOGL·AMZN이 2026~2027년 AI 설비투자 전망을 유지 또는 상향한다",
+   "why": "에이전트 사용량 증가로 추론 수요가 늘고, 하이퍼스케일러가 용량 부족을 반복 언급",
+   "check_by": "2026-10-30 MSFT·GOOGL(10/28 장후 확정)·AMZN(10/29 장후 확정) 실적",
+   "confirm_if": "3사 중 2곳 이상이 다음 분기 또는 연간(2026/2027) 설비투자 수치 가이던스를 직전 제시치보다 높임",
+   "refute_if": "3사 중 2곳 이상이 설비투자 수치 가이던스를 직전 제시치보다 낮춤(정성적 발언은 판정에서 제외, 유지만 한 경우는 expired로 닫고 교훈 기록)",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-30 MSFT·GOOGL(10/28)·AMZN(10/29 추정) 실적",
+    "confirm_if": "3사 중 2곳 이상이 설비투자 전망 유지/상향 또는 용량 부족 언급",
+    "refute_if": "3사 중 2곳 이상이 설비투자 전망 하향 또는 데이터센터 투자 속도 조절 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:45+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-30 MSFT·GOOGL(10/28)·AMZN(10/29 추정) 실적",
+       "to": "2026-10-30 MSFT·GOOGL(10/28 장후 확정)·AMZN(10/29 장후 확정) 실적"
+      },
+      "confirm_if": {
+       "from": "3사 중 2곳 이상이 설비투자 전망 유지/상향 또는 용량 부족 언급",
+       "to": "3사 중 2곳 이상이 다음 분기 또는 연간(2026/2027) 설비투자 수치 가이던스를 직전 제시치보다 높임"
+      },
+      "refute_if": {
+       "from": "3사 중 2곳 이상이 설비투자 전망 하향 또는 데이터센터 투자 속도 조절 언급",
+       "to": "3사 중 2곳 이상이 설비투자 수치 가이던스를 직전 제시치보다 낮춤(정성적 발언은 판정에서 제외, 유지만 한 경우는 expired로 닫고 교훈 기록)"
+      }
+     },
+     "reason": "레드팀 지적 반영: '유지 또는 상향'은 너무 쉬운 조건이고 '속도 조절 언급'은 정성적이라 수치 변경으로만 판정; AMZN 일자 확정"
+    }
+   ]
+  },
+  {
+   "id": "H0006",
+   "player": "falcon",
+   "symbol": "VRT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Vertiv가 Q3 실적에서 수주(오더)와 백로그 증가를 발표하고 연간 가이던스를 유지 또는 상향한다",
+   "why": "GPU 밀도 증가로 액체냉각·전력 장비가 병목, 네오클라우드·하이퍼스케일러 공통 공급망",
+   "check_by": "2026-10-29 VRT 3분기 실적(10/28 장전 확정)",
+   "confirm_if": "3분기 북투빌(수주÷매출) 1.0 이상 AND 백로그가 전분기 말보다 증가",
+   "refute_if": "북투빌 1.0 미만, 또는 백로그 전분기 대비 감소, 또는 2026 연간 매출 가이던스 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-31 Vertiv Q3 실적(일자 미확인, 10월 하순 예상)",
+    "confirm_if": "오더 또는 백로그 전년 대비 증가, 가이던스 유지/상향",
+    "refute_if": "오더 감소 또는 가이던스 하향, 고객 프로젝트 지연 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:45+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-31 Vertiv Q3 실적(일자 미확인, 10월 하순 예상)",
+       "to": "2026-10-29 VRT 3분기 실적(10/28 장전 확정)"
+      },
+      "confirm_if": {
+       "from": "오더 또는 백로그 전년 대비 증가, 가이던스 유지/상향",
+       "to": "3분기 북투빌(수주÷매출) 1.0 이상 AND 백로그가 전분기 말보다 증가"
+      },
+      "refute_if": {
+       "from": "오더 감소 또는 가이던스 하향, 고객 프로젝트 지연 언급",
+       "to": "북투빌 1.0 미만, 또는 백로그 전분기 대비 감소, 또는 2026 연간 매출 가이던스 하향"
+      }
+     },
+     "reason": "레드팀 지적 반영: 분기 수주 잡음을 줄이려 북투빌·백로그 QoQ로 변경, 실적일 10/28 장전 확정"
+    }
+   ]
+  },
+  {
+   "id": "H0007",
+   "player": "turtle",
+   "symbol": "MSFT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "MSFT가 FY26 Q1 실적에서 Azure 성장 가속 또는 유지와 함께 AI capex 계획을 유지·상향한다",
+   "why": "Foundry 고객 다수가 1조 토큰 이상 처리 궤도, 에이전트 토큰이 사람 토큰의 약 7배(OpenRouter 9월), 네오클라우드와 대형 장기계약 지속",
+   "check_by": "2026-10-29 MSFT 실적(10/28 장후) 다음 거래일",
+   "confirm_if": "Azure 성장률(고정환율)이 직전 분기 대비 하락폭 0%p 이하(유지·가속)이고 FY27 capex 가이던스 수치 하향 없음 (둔화 0~2%p 구간은 적중·반증 아님, 만료 처리 후 교훈 작성)",
+   "refute_if": "Azure 성장률이 직전 분기 대비 2%p 이상 둔화 또는 회사 자체 가이던스 하단 미달, 또는 capex 가이던스 수치 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-30 MSFT 실적(10/28 예정)",
+    "confirm_if": "Azure 성장률이 직전 분기 이상이고 capex 가이던스 유지 또는 상향",
+    "refute_if": "Azure 성장률 둔화 폭이 2%p 이상이거나 capex 축소·데이터센터 계약 연기 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:39+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-30 MSFT 실적(10/28 예정)",
+       "to": "2026-10-29 MSFT 실적(10/28 장후) 다음 거래일"
+      },
+      "confirm_if": {
+       "from": "Azure 성장률이 직전 분기 이상이고 capex 가이던스 유지 또는 상향",
+       "to": "Azure 성장률(고정환율)이 직전 분기 대비 하락폭 0%p 이하(유지·가속)이고 FY27 capex 가이던스 수치 하향 없음 (둔화 0~2%p 구간은 적중·반증 아님, 만료 처리 후 교훈 작성)"
+      },
+      "refute_if": {
+       "from": "Azure 성장률 둔화 폭이 2%p 이상이거나 capex 축소·데이터센터 계약 연기 언급",
+       "to": "Azure 성장률이 직전 분기 대비 2%p 이상 둔화 또는 회사 자체 가이던스 하단 미달, 또는 capex 가이던스 수치 하향"
+      }
+     },
+     "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로"
+    }
+   ]
+  },
+  {
+   "id": "H0008",
+   "player": "turtle",
+   "symbol": "VRT",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Vertiv가 Q3 실적에서 수주(orders)와 백로그 증가를 보고하고 연간 가이던스를 유지·상향한다",
+   "why": "하이퍼스케일러 capex 지속, 블랙웰 GPU 임대가 상승(B200 143일 +52.9%, Ornn 10/16)으로 고밀도 냉각 수요",
+   "check_by": "2026-10-28 VRT 실적(장전) 당일 종료 후",
+   "confirm_if": "분기 북투빌(수주÷매출) 1.0 이상 그리고 백로그 전분기 대비 증가 그리고 연간 매출 가이던스 중간값 하향 없음",
+   "refute_if": "북투빌 1.0 미만 또는 백로그 전분기 대비 감소 또는 연간 가이던스 중간값 하향",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-10-31 Vertiv Q3 실적(날짜 미확인, 10월 말 예상)",
+    "confirm_if": "수주 전년비 증가, 백로그 증가, 가이던스 유지 또는 상향",
+    "refute_if": "수주 감소 또는 가이던스 하향, 데이터센터 프로젝트 지연 언급"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:39+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-10-31 Vertiv Q3 실적(날짜 미확인, 10월 말 예상)",
+       "to": "2026-10-28 VRT 실적(장전) 당일 종료 후"
+      },
+      "confirm_if": {
+       "from": "수주 전년비 증가, 백로그 증가, 가이던스 유지 또는 상향",
+       "to": "분기 북투빌(수주÷매출) 1.0 이상 그리고 백로그 전분기 대비 증가 그리고 연간 매출 가이던스 중간값 하향 없음"
+      },
+      "refute_if": {
+       "from": "수주 감소 또는 가이던스 하향, 데이터센터 프로젝트 지연 언급",
+       "to": "북투빌 1.0 미만 또는 백로그 전분기 대비 감소 또는 연간 가이던스 중간값 하향"
+      }
+     },
+     "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로"
+    }
+   ]
+  },
+  {
+   "id": "H0009",
+   "player": "turtle",
+   "symbol": "NBIS",
+   "open_date": "2026-10-19",
+   "status": "pending_fill",
+   "scenario": "Nebius가 Q3 실적에서 2026 ARR·capex 가이던스를 유지하고 선수금 기반 조달을 이어가며 추가 대형 희석(ATM 증액·신규 유상증자) 없이 분기를 마친다",
+   "why": "6/30 현금 $8.0B, 이연수익 $6.0B, 신규 계약 선수금이 capex 50~60% 커버, 8월 전환사채 $5.75B 조달 완료",
+   "check_by": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 회사 공지 후 날짜 재수정)",
+   "confirm_if": "2026 ARR·capex 가이던스 중간값 유지 이상 그리고 분기 중 발행주식수 증가 3% 미만 그리고 신규 부채·전환사채 조달이 합계 20억달러 미만이며 표면금리 8% 미만",
+   "refute_if": "가이던스 중간값 하향, 또는 분기 중 발행주식수 3% 이상 증가(ATM 포함), 또는 신규 부채·전환사채 20억달러 이상 혹은 표면금리 8% 이상",
+   "verdict_date": "",
+   "evidence": "",
+   "lesson": "",
+   "lesson_id": "",
+   "learned_from": [],
+   "linked_pl_krw": 0,
+   "exited_on_refute": "",
+   "remaining_shares": 0,
+   "original": {
+    "check_by": "2026-11-13 NBIS Q3 실적(날짜 미확인)",
+    "confirm_if": "가이던스 유지·상향, ATM 증액이나 신규 증자 공시 없음",
+    "refute_if": "가이던스 하향, ATM 증액·신규 유상증자 공시, 대형 고객 계약 지연·취소"
+   },
+   "amendments": [
+    {
+     "time": "2026-10-19T07:04:50+00:00",
+     "changes": {
+      "check_by": {
+       "from": "2026-11-13 NBIS Q3 실적(날짜 미확인)",
+       "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 회사 공지 후 날짜 재수정)"
+      },
+      "confirm_if": {
+       "from": "가이던스 유지·상향, ATM 증액이나 신규 증자 공시 없음",
+       "to": "2026 ARR·capex 가이던스 중간값 유지 이상 그리고 분기 중 발행주식수 증가 3% 미만 그리고 신규 부채·전환사채 조달이 합계 20억달러 미만이며 표면금리 8% 미만"
+      },
+      "refute_if": {
+       "from": "가이던스 하향, ATM 증액·신규 유상증자 공시, 대형 고객 계약 지연·취소",
+       "to": "가이던스 중간값 하향, 또는 분기 중 발행주식수 3% 이상 증가(ATM 포함), 또는 신규 부채·전환사채 20억달러 이상 혹은 표면금리 8% 이상"
+      }
+     },
+     "reason": "레드팀 지적 반영: 희석·조달을 수치 기준으로 교체, 판정일을 실적 발표 다음 거래일로(직전 제출은 날짜 형식 오류)"
+    }
+   ]
+  }
+ ],
+ "events": [
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "kind": "LESSON",
+   "symbol": "",
+   "lesson_id": "L-balance-1",
+   "lesson": "IREN은 지지선 붕괴·시장가 증자 희석·인프라 신뢰성 문제가 겹쳐 반증 조건을 명확히 세우기 어려워 첫 주문에서 제외"
+  },
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "네오클라우드 중 단기 만기 부담이 가장 작고 투자적격 고객 계약 보유",
+   "rule1_check": "반증 조건을 먼저 정하고 현금 45%를 남겨 손실은 작게, 에이전트 수요 가설이 확인되는 종목만 보유를 늘려 이익은 크게",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0001"
+  },
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "symbol": "MSFT",
+   "side": "BUY",
+   "reason": "에이전트 수요가 대형 클라우드 매출로 이어지는지 검증하는 저변동 축",
+   "rule1_check": "반증 조건을 먼저 정하고 현금 45%를 남겨 손실은 작게, 에이전트 수요 가설이 확인되는 종목만 보유를 늘려 이익은 크게",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0002"
+  },
+  {
+   "time": "2026-10-19T06:34:36+00:00",
+   "player": "balance",
+   "symbol": "GOOGL",
+   "side": "BUY",
+   "reason": "토큰 사용량 증가가 가장 크게 확인된 하이퍼스케일러",
+   "rule1_check": "반증 조건을 먼저 정하고 현금 45%를 남겨 손실은 작게, 에이전트 수요 가설이 확인되는 종목만 보유를 늘려 이익은 크게",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0003"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "turtle",
+   "symbol": "MSFT",
+   "side": "BUY",
+   "reason": "에이전트 수요의 최상류 수혜, 자체 현금으로 capex 조달(희석·차환 위험 없음)",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0004"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "turtle",
+   "symbol": "VRT",
+   "side": "BUY",
+   "reason": "데이터센터 전력·냉각 장비, 네오클라우드 자금 문제와 무관하게 하이퍼스케일러 capex 수혜",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0005"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "turtle",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "가설 검증용 소액. 시장은 펀딩 리스크를 크게 반영, 실제 첫 만기는 2029년",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0006"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "falcon",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "네오클라우드 중 계약 질(MSFT·Meta)이 가장 좋고 낙폭이 큼",
+   "rule1_check": "반증 조건을 이벤트로 먼저 정해 틀리면 바로 정리하고(손실 작게), 하이퍼스케일러 설비투자 확대가 맞으면 보유해 이익을 키움; 현금 30% 남겨 실적 이벤트 후 추가",
+   "shares_req": null,
+   "amount_krw": 3000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0004"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "falcon",
+   "symbol": "NVDA",
+   "side": "BUY",
+   "reason": "AI 인프라 수요의 원천 지표",
+   "rule1_check": "반증 조건을 이벤트로 먼저 정해 틀리면 바로 정리하고(손실 작게), 하이퍼스케일러 설비투자 확대가 맞으면 보유해 이익을 키움; 현금 30% 남겨 실적 이벤트 후 추가",
+   "shares_req": null,
+   "amount_krw": 2500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0005"
+  },
+  {
+   "time": "2026-10-19T06:34:41+00:00",
+   "player": "falcon",
+   "symbol": "VRT",
+   "side": "BUY",
+   "reason": "데이터센터 전력·냉각 병목 수혜",
+   "rule1_check": "반증 조건을 이벤트로 먼저 정해 틀리면 바로 정리하고(손실 작게), 하이퍼스케일러 설비투자 확대가 맞으면 보유해 이익을 키움; 현금 30% 남겨 실적 이벤트 후 추가",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0006"
+  },
+  {
+   "time": "2026-10-19T06:35:05+00:00",
+   "player": "turtle",
+   "symbol": "MSFT",
+   "side": "BUY",
+   "reason": "에이전트 수요의 최상류 수혜, 자체 현금으로 capex 조달(희석·차환 위험 없음)",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 2000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0007"
+  },
+  {
+   "time": "2026-10-19T06:35:05+00:00",
+   "player": "turtle",
+   "symbol": "VRT",
+   "side": "BUY",
+   "reason": "데이터센터 전력·냉각 장비, 네오클라우드 자금 문제와 무관하게 하이퍼스케일러 capex 수혜",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1500000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0008"
+  },
+  {
+   "time": "2026-10-19T06:35:05+00:00",
+   "player": "turtle",
+   "symbol": "NBIS",
+   "side": "BUY",
+   "reason": "가설 검증용 소액. 시장은 펀딩 리스크를 크게 반영, 실제 첫 만기는 2029년",
+   "rule1_check": "현금 55% 유지, 반증 조건을 실적 이벤트로 먼저 정해 틀리면 즉시 정리(손실 작게), 맞으면 보유(이익 크게). 펀딩 리스크가 낮은 수혜주 위주, 고위험 NBIS는 소액",
+   "shares_req": null,
+   "amount_krw": 1000000,
+   "learned_from": [],
+   "kind": "SUBMIT",
+   "hypothesis_id": "H0009"
+  },
+  {
+   "time": "2026-10-19T07:04:39+00:00",
+   "player": "turtle",
+   "kind": "AMEND",
+   "symbol": "MSFT",
+   "hypothesis_id": "H0007",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-30 MSFT 실적(10/28 예정)",
+     "to": "2026-10-29 MSFT 실적(10/28 장후) 다음 거래일"
+    },
+    "confirm_if": {
+     "from": "Azure 성장률이 직전 분기 이상이고 capex 가이던스 유지 또는 상향",
+     "to": "Azure 성장률(고정환율)이 직전 분기 대비 하락폭 0%p 이하(유지·가속)이고 FY27 capex 가이던스 수치 하향 없음 (둔화 0~2%p 구간은 적중·반증 아님, 만료 처리 후 교훈 작성)"
+    },
+    "refute_if": {
+     "from": "Azure 성장률 둔화 폭이 2%p 이상이거나 capex 축소·데이터센터 계약 연기 언급",
+     "to": "Azure 성장률이 직전 분기 대비 2%p 이상 둔화 또는 회사 자체 가이던스 하단 미달, 또는 capex 가이던스 수치 하향"
+    }
+   },
+   "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)"
+  },
+  {
+   "time": "2026-10-19T07:04:39+00:00",
+   "player": "turtle",
+   "kind": "AMEND",
+   "symbol": "VRT",
+   "hypothesis_id": "H0008",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-31 Vertiv Q3 실적(날짜 미확인, 10월 말 예상)",
+     "to": "2026-10-28 VRT 실적(장전) 당일 종료 후"
+    },
+    "confirm_if": {
+     "from": "수주 전년비 증가, 백로그 증가, 가이던스 유지 또는 상향",
+     "to": "분기 북투빌(수주÷매출) 1.0 이상 그리고 백로그 전분기 대비 증가 그리고 연간 매출 가이던스 중간값 하향 없음"
+    },
+    "refute_if": {
+     "from": "수주 감소 또는 가이던스 하향, 데이터센터 프로젝트 지연 언급",
+     "to": "북투빌 1.0 미만 또는 백로그 전분기 대비 감소 또는 연간 가이던스 중간값 하향"
+    }
+   },
+   "reason": "레드팀 지적 반영: 정성 문구를 사실 수치로 교체, 실적일 확정(MSFT 10/28 장후, VRT 10/28 장전), NBIS는 실적일 미확정이라 발표 다음 거래일로",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)"
+  },
+  {
+   "time": "2026-10-19T07:04:39+00:00",
+   "player": "turtle",
+   "kind": "REJECT",
+   "symbol": "NBIS",
+   "side": "AMEND",
+   "why": "가설 수정 반려: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)",
+   "class": "return",
+   "why_original": "가설 수정 거부: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "reclassified_at": "2026-10-19T07:08:53+00:00"
+  },
+  {
+   "time": "2026-10-19T07:04:43+00:00",
+   "player": "balance",
+   "kind": "REJECT",
+   "symbol": "NBIS",
+   "side": "AMEND",
+   "why": "가설 수정 반려: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다",
+   "class": "return",
+   "why_original": "가설 수정 거부: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "reclassified_at": "2026-10-19T07:08:53+00:00"
+  },
+  {
+   "time": "2026-10-19T07:04:43+00:00",
+   "player": "balance",
+   "kind": "AMEND",
+   "symbol": "MSFT",
+   "hypothesis_id": "H0002",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-02 MSFT 분기 실적(10월 말 예정, 날짜 미확인)",
+     "to": "2026-10-29 MSFT FY27 1분기 실적(10/28 장후 확정)"
+    },
+    "confirm_if": {
+     "from": "실적 발표에서 Azure 성장률 유지 또는 가속, 용량 제약 언급, 설비투자 가이던스 유지/상향",
+     "to": "Azure 성장률이 직전 분기 이상이고, 다음 분기 Azure 가이던스가 이번 분기 성장률보다 2%p 넘게 낮지 않음"
+    },
+    "refute_if": {
+     "from": "Azure 성장 둔화 명시, 설비투자 축소 또는 AI 용량 과잉 언급",
+     "to": "Azure 성장률이 직전 분기보다 2%p 이상 둔화, 또는 FY27 설비투자 가이던스 하향. 둔화 0~2%p는 보류 후 다음 분기에 재판정"
+    }
+   },
+   "reason": "심판 확정일 반영, 판정 불가능한 정성 문구(AI 용량 과잉 언급) 삭제, 둔화 폭 수치화",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다"
+  },
+  {
+   "time": "2026-10-19T07:04:43+00:00",
+   "player": "balance",
+   "kind": "AMEND",
+   "symbol": "GOOGL",
+   "hypothesis_id": "H0003",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-02 Alphabet 분기 실적(10월 말 예정, 날짜 미확인)",
+     "to": "2026-10-29 Alphabet 3분기 실적(10/28 장후 확정)"
+    },
+    "confirm_if": {
+     "from": "실적에서 토큰 처리량 증가 수치 공개 또는 클라우드 성장 가속, 설비투자 유지/상향",
+     "to": "Google Cloud 매출 성장률이 직전 분기 이상이고, 2026 설비투자 가이던스를 유지하거나 상향"
+    },
+    "refute_if": {
+     "from": "클라우드 성장 둔화, 설비투자 하향, AI 수요 정상화 언급",
+     "to": "Google Cloud 매출 성장률이 직전 분기보다 3%p 이상 둔화, 또는 2026 설비투자 가이던스 하향"
+    }
+   },
+   "reason": "심판 확정일 반영, 공개되지 않을 수 있는 토큰 조건과 정성 문구 삭제, 둔화 폭 수치화",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다"
+  },
+  {
+   "time": "2026-10-19T07:04:45+00:00",
+   "player": "falcon",
+   "kind": "REJECT",
+   "symbol": "NBIS",
+   "side": "AMEND",
+   "why": "가설 수정 반려: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함",
+   "class": "return",
+   "why_original": "가설 수정 거부: check_by 날짜 형식(YYYY-MM-DD) 오류",
+   "reclassified_at": "2026-10-19T07:08:53+00:00"
+  },
+  {
+   "time": "2026-10-19T07:04:45+00:00",
+   "player": "falcon",
+   "kind": "AMEND",
+   "symbol": "NVDA",
+   "hypothesis_id": "H0005",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-30 MSFT·GOOGL(10/28)·AMZN(10/29 추정) 실적",
+     "to": "2026-10-30 MSFT·GOOGL(10/28 장후 확정)·AMZN(10/29 장후 확정) 실적"
+    },
+    "confirm_if": {
+     "from": "3사 중 2곳 이상이 설비투자 전망 유지/상향 또는 용량 부족 언급",
+     "to": "3사 중 2곳 이상이 다음 분기 또는 연간(2026/2027) 설비투자 수치 가이던스를 직전 제시치보다 높임"
+    },
+    "refute_if": {
+     "from": "3사 중 2곳 이상이 설비투자 전망 하향 또는 데이터센터 투자 속도 조절 언급",
+     "to": "3사 중 2곳 이상이 설비투자 수치 가이던스를 직전 제시치보다 낮춤(정성적 발언은 판정에서 제외, 유지만 한 경우는 expired로 닫고 교훈 기록)"
+    }
+   },
+   "reason": "레드팀 지적 반영: '유지 또는 상향'은 너무 쉬운 조건이고 '속도 조절 언급'은 정성적이라 수치 변경으로만 판정; AMZN 일자 확정",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함"
+  },
+  {
+   "time": "2026-10-19T07:04:45+00:00",
+   "player": "falcon",
+   "kind": "AMEND",
+   "symbol": "VRT",
+   "hypothesis_id": "H0006",
+   "changes": {
+    "check_by": {
+     "from": "2026-10-31 Vertiv Q3 실적(일자 미확인, 10월 하순 예상)",
+     "to": "2026-10-29 VRT 3분기 실적(10/28 장전 확정)"
+    },
+    "confirm_if": {
+     "from": "오더 또는 백로그 전년 대비 증가, 가이던스 유지/상향",
+     "to": "3분기 북투빌(수주÷매출) 1.0 이상 AND 백로그가 전분기 말보다 증가"
+    },
+    "refute_if": {
+     "from": "오더 감소 또는 가이던스 하향, 고객 프로젝트 지연 언급",
+     "to": "북투빌 1.0 미만, 또는 백로그 전분기 대비 감소, 또는 2026 연간 매출 가이던스 하향"
+    }
+   },
+   "reason": "레드팀 지적 반영: 분기 수주 잡음을 줄이려 북투빌·백로그 QoQ로 변경, 실적일 10/28 장전 확정",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함"
+  },
+  {
+   "time": "2026-10-19T07:04:50+00:00",
+   "player": "turtle",
+   "kind": "AMEND",
+   "symbol": "NBIS",
+   "hypothesis_id": "H0009",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-13 NBIS Q3 실적(날짜 미확인)",
+     "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 회사 공지 후 날짜 재수정)"
+    },
+    "confirm_if": {
+     "from": "가이던스 유지·상향, ATM 증액이나 신규 증자 공시 없음",
+     "to": "2026 ARR·capex 가이던스 중간값 유지 이상 그리고 분기 중 발행주식수 증가 3% 미만 그리고 신규 부채·전환사채 조달이 합계 20억달러 미만이며 표면금리 8% 미만"
+    },
+    "refute_if": {
+     "from": "가이던스 하향, ATM 증액·신규 유상증자 공시, 대형 고객 계약 지연·취소",
+     "to": "가이던스 중간값 하향, 또는 분기 중 발행주식수 3% 이상 증가(ATM 포함), 또는 신규 부채·전환사채 20억달러 이상 혹은 표면금리 8% 이상"
+    }
+   },
+   "reason": "레드팀 지적 반영: 희석·조달을 수치 기준으로 교체, 판정일을 실적 발표 다음 거래일로(직전 제출은 날짜 형식 오류)",
+   "rule1_check": "판정 기준을 사실 수치로 좁혀 틀리면 빨리 인정·정리(손실 작게), 맞으면 보유(이익 크게)"
+  },
+  {
+   "time": "2026-10-19T07:04:53+00:00",
+   "player": "balance",
+   "kind": "AMEND",
+   "symbol": "NBIS",
+   "hypothesis_id": "H0001",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-20 Q3 실적(날짜 미확정, ORTEX 11/12 추정)",
+     "to": "2026-11-20 NBIS 3분기 실적 발표 다음 거래일에 판정 (발표일 미확정, 심판 추정 11/10~11/12, 발표가 늦으면 다음 거래일로 재수정)"
+    },
+    "confirm_if": {
+     "from": "실적 자료에 2026 가이던스 유지/상향 명시, 또는 2027 매출 가이던스 120억달러 이상",
+     "to": "2026 매출 가이던스 하단을 유지하거나 상향하고, ARR 가이던스 범위를 유지·상향하거나 10억달러 이상의 신규 계약을 공시"
+    },
+    "refute_if": {
+     "from": "가이던스 하향, 데이터센터 가동 지연 공시, MSFT/META 계약 변경, 고금리 대규모 조달 또는 시장가 증자 가속",
+     "to": "2026 매출 가이던스 하단 하향, 또는 분기 중 신주 발행이 기존 주식 수의 5% 이상, 또는 표면금리 8% 이상이거나 총 20억달러 이상의 신규 부채 조달"
+    }
+   },
+   "reason": "레드팀 지적 반영: 반증 조건 수치화. 엔진이 날짜 형식을 요구해 상한일 11/20을 두고, 실제 판정은 발표 다음 거래일. 근거의 확정계약 400억달러+는 공시 재확인 전까지 미확인",
+   "rule1_check": "판정 조건을 사실 수치로 좁혀 틀렸을 때 빨리 정리하고 손실을 작게 하며, 맞은 가설만 보유해 이익이 손실보다 크게 한다"
+  },
+  {
+   "time": "2026-10-19T07:05:04+00:00",
+   "player": "falcon",
+   "kind": "AMEND",
+   "symbol": "NBIS",
+   "hypothesis_id": "H0004",
+   "changes": {
+    "check_by": {
+     "from": "2026-11-13 Nebius Q3 실적(일자 미확정, 외부 캘린더 10/22 또는 11/10)",
+     "to": "2026-11-13 NBIS 3분기 실적 발표 다음 거래일(실적일 미확정, 외부 추정 11/10~11/12; 회사 공지 나오면 그 다음 거래일로 재수정)"
+    },
+    "confirm_if": {
+     "from": "실적 자료에 가이던스 유지/상향 명시, 납품 지연·계약 해지 언급 없음",
+     "to": "3분기 매출 9.05억달러 이상 AND 2026 연간 매출 가이던스 하단 30억달러 이상 유지 AND 연말 ARR 가이던스 하단 70억달러 이상 유지"
+    },
+    "refute_if": {
+     "from": "매출 또는 ARR 가이던스 하향, MSFT/Meta 납품 지연·해지 공시, 또는 실적 전후 시장가 이하 대규모 주식 증자 공시",
+     "to": "위 셋 중 하나라도 미달, 또는 3분기 시작~실적 발표일 사이 발행주식수 3% 이상 증가(신규 증자·ATM 합산), 또는 같은 기간 신규 부채·전환사채 합계 30억달러 이상 또는 표면금리 8% 이상, 또는 MSFT/Meta 계약 납품 지연·해지 공시"
+    }
+   },
+   "reason": "레드팀 지적 반영: 판정일을 실적 발표 다음 거래일 기준으로, '유지 또는 상향'을 컨센서스·가이던스 하단 수치로, 희석 반증을 증자·부채·금리 수치로 확대",
+   "rule1_check": "판정 조건을 가격이 아닌 공시 수치로 조여, 틀리면 빨리 인정·정리해 손실을 작게 하고 맞으면 보유해 이익을 크게 함"
+  }
+ ],
+ "bench_hist": {
+  "QQQ": [
+   {
+    "date": "2026-10-19",
+    "close": 709.7999877929688
+   }
+  ],
+  "SPY": [
+   {
+    "date": "2026-10-19",
+    "close": 763.25
+   }
+  ]
+ },
+ "mvp": null,
+ "lessons": [
+  {
+   "id": "L-balance-1",
+   "player": "balance",
+   "date": "2026-10-19",
+   "text": "IREN은 지지선 붕괴·시장가 증자 희석·인프라 신뢰성 문제가 겹쳐 반증 조건을 명확히 세우기 어려워 첫 주문에서 제외",
+   "hypothesis_id": "",
+   "symbol": "",
+   "verdict": "",
+   "scenario": ""
+  }
+ ],
+ "market": {
+  "open": false,
+  "state": "CLOSED",
+  "checked_at": "2026-10-19T07:09:29+00:00",
+  "reason": "정규장 시간 아님 (프리마켓)"
+ },
+ "earnings_confirmed": [
+  {
+   "symbol": "MSFT",
+   "period": "FY27 1분기",
+   "date": "2026-10-28",
+   "when": "(수)",
+   "session": "장후",
+   "source": "https://news.microsoft.com/source/2026/10/07/microsoft-announces-quarterly-earnings-release-date-69/",
+   "checked": "2026-10-19",
+   "status": "확정 (10/7 회사 공지)"
+  },
+  {
+   "symbol": "GOOGL",
+   "period": "2026년 3분기",
+   "date": "2026-10-28",
+   "when": "(수)",
+   "session": "장후",
+   "source": "https://abc.xyz/investor/news/news-details/2026/Alphabet-Announces-Date-of-Third-Quarter-2026-Financial-Results-Conference-Call-2026-8tpGZsLS6v/default.aspx",
+   "checked": "2026-10-19",
+   "status": "확정 (10/6 회사 공지)"
+  },
+  {
+   "symbol": "VRT",
+   "period": "2026년 3분기",
+   "date": "2026-10-28",
+   "when": "(수)",
+   "session": "장전",
+   "source": "https://investors.vertiv.com/news/news-details/2026/Vertiv-Announces-Date-of-Third-Quarter-2026-Earnings-Release-and-Conference-Call/default.aspx",
+   "checked": "2026-10-19",
+   "status": "확정 (10/14 회사 공지)"
+  },
+  {
+   "symbol": "AMZN",
+   "period": "2026년 3분기",
+   "date": "2026-10-29",
+   "when": "(목)",
+   "session": "장후",
+   "source": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-to-Webcast-Third-Quarter-2026-Financial-Results-Conference-Call/",
+   "checked": "2026-10-19",
+   "status": "확정 (10/15 회사 공지)"
+  }
+ ]
+};</script><script>/* 모의투자 리그 — data.json 하나만 읽는 정적 앱 */
+(function(){
+'use strict';
+var D=null, app=document.getElementById('app');
+var ET='America/New_York', KST='Asia/Seoul';
+
+/* ---------- 포맷 ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function n0(x){return Math.round(Number(x)||0).toLocaleString('ko-KR');}
+function won(x){return n0(x)+'원';}
+function swon(x){x=Math.round(Number(x)||0);return (x>0?'+':x<0?'-':'')+n0(Math.abs(x))+'원';}
+function pct(x,d){if(x==null||isNaN(x))return '—';d=d==null?2:d;var v=Number(x);return (v>0?'+':'')+v.toFixed(d)+'%';}
+function cls(x){x=Number(x)||0;return Math.abs(x)<1e-9?'flat':x>0?'up':'down';}
+function pfTxt(pf){return pf==null?'—':pf==='inf'?'∞':Number(pf).toFixed(2);}
+function hm(iso,tz){try{return new Date(iso).toLocaleTimeString('en-GB',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:false});}catch(_){return '';}}
+function kday(iso){try{return new Date(iso).toLocaleDateString('en-CA',{timeZone:KST});}catch(_){return '';}}
+function dayLabel(d){var t=kday(new Date().toISOString()), y=kday(new Date(Date.now()-864e5).toISOString());
+  if(d===t)return '오늘'; if(d===y)return '어제'; var p=d.split('-'); return (+p[1])+'월 '+(+p[2])+'일';}
+function player(id){return (D.players||[]).filter(function(p){return p.id===id;})[0]||{id:id,name:id,color:'#8A909B'};}
+function initials(name){name=String(name||'');return name.length>=3?name.slice(-2):name.slice(0,2);}
+function mono(p,size){return '<span class="mono'+(size?' '+size:'')+'" style="background:'+esc(p.color||'#8A909B')+'" aria-hidden="true">'+esc(initials(p.name))+'</span>';}
+function hyp(id){return (D.hypotheses||[]).filter(function(h){return h.id===id;})[0];}
+function fx(){return (D.league&&D.league.fx)||1330;}
+function dday(s){var m=/(\d{4}-\d{2}-\d{2})/.exec(s||'');if(!m)return null;
+  var t=new Date(kday(new Date().toISOString())+'T00:00:00Z'), d=new Date(m[1]+'T00:00:00Z');return Math.round((d-t)/864e5);}
+var ST={open:['진행중','wait'],pending_fill:['체결 대기',''],confirmed:['맞음','ok'],refuted:['틀림','no'],expired:['기한 만료','warn'],cancelled:['취소','']};
+function stChip(s){var x=ST[s]||[s,''];return '<span class="chip '+x[1]+'">'+esc(x[0])+'</span>';}
+var ICON={back:'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>'};
+
+/* ---------- 상단 ---------- */
+function mktPill(){
+  var m=D.market||{}, g=D.generated_at, age=(Date.now()-new Date(g).getTime())/6e4;
+  var c=m.open?(age>10?'mkt stale':'mkt on'):'mkt', t=m.open?(age>10?'장중 · 갱신 지연':'장중'):'장 마감';
+  return '<span class="'+c+'" id="mkt"><i></i>'+t+'</span>';
+}
+function updLine(){return '갱신 '+hm(D.generated_at,ET)+' ET · '+hm(D.generated_at,KST)+' KST';}
+function liveBar(){var a=document.getElementById('mkt');if(a)a.outerHTML=mktPill();var b=document.getElementById('upd');if(b)b.textContent=updLine();}
+
+/* ---------- 홈 ---------- */
+function home(){
+  var L=D.league||{}, rules=D.rules||[], q=(L.bench_return_pct||{}).QQQ;
+  var h='<div class="view"><div class="top"><h1>모의투자 리그</h1>'+mktPill()+'</div>'+
+    '<div class="meta"><span>가상 1천만원 · 실제 돈 아님</span> · <span id="upd">'+updLine()+'</span></div>';
+  h+='<div class="season num">시즌 '+(L.days_elapsed||0)+' / '+(L.evaluation_days||90)+'일<span class="dot">·</span>같은 기간 QQQ <span class="'+cls(q)+'">'+pct(q)+'</span></div>';
+  // 순위
+  h+='<section class="sec sec-first"><div class="sec-h"><h2>순위</h2><span class="t3">Profit Factor 기준</span></div>';
+  var started=(D.events||[]).some(function(e){return e.kind==='FILL';});
+  (D.players||[]).forEach(function(p){
+    h+='<a class="row" href="#/p/'+esc(p.id)+'"><span class="rank num">'+(started?p.rank:'–')+'</span>'+mono(p)+
+      '<div class="main"><div class="nm">'+esc(p.name)+'</div><div class="sub num">총자산 '+won(p.equity_krw)+'</div></div>'+
+      '<div class="rt"><div class="big num"><span class="pfl">PF</span>'+pfTxt(p.profit_factor)+'</div>'+
+      '<div class="sm num '+cls(p.pl_krw)+'">'+swon(p.pl_krw)+' · '+pct(p.return_krw_pct)+'</div></div></a>';
+  });
+  if(!started) h+='<p class="meta" style="margin-top:4px">첫 체결이 나오면 순위가 매겨집니다.</p>';
+  h+='</section>';
+  // 오늘의 변화
+  var today=kday(new Date().toISOString());
+  var evs=(D.events||[]).filter(function(e){return (e.kind==='FILL'||e.kind==='VERDICT')&&kday(e.time)===today;}).slice(-6).reverse();
+  h+='<section class="sec"><div class="sec-h"><h2>오늘의 변화</h2><a class="t3" href="#/feed">전체 보기</a></div>';
+  h+=evs.length?evs.map(function(e){return evRow(e,true);}).join(''):'<div class="empty">오늘은 아직 체결이나 판정이 없어요</div>';
+  var pend=0;(D.players||[]).forEach(function(p){pend+=(p.pending||[]).length;});
+  if(pend) h+='<p class="meta">체결 대기 주문 '+pend+'건 · 장이 열리면 체결됩니다</p>';
+  h+='</section></div>';
+  return h;
+}
+
+/* ---------- 이벤트 행 (홈·중계 공용) ---------- */
+function evRow(e,showWho){
+  var p=player(e.player), H=e.hypothesis_id?hyp(e.hypothesis_id):null, title=H?H.scenario:'';
+  var who=showWho?mono(p,'s')+'<span class="who">'+esc(p.name)+'</span>':'';
+  var tm='<div class="tm num">'+hm(e.time,KST)+'</div>';
+  if(e.kind==='FILL'){
+    var amt=(e.shares||0)*(e.price||0)*fx(), buy=e.side==='BUY';
+    var src=e.fill_source==='intraday'?'장중가':(e.fill_source==='open'?'시가':'체결');
+    return '<div class="ev">'+tm+'<div class="bd"><div class="l1">'+who+'<span>'+esc(e.symbol)+' '+n0(e.shares)+'주 '+(buy?'매수':'매도')+'</span>'+
+      '<span class="amt num">'+won(amt)+'</span></div>'+
+      '<div class="l2 num">'+src+' $'+Number(e.price||0).toFixed(2)+(e.fill_source==='intraday'?' · 최대 15분 지연 시세':'')+' · 비용 '+won(e.cost_krw)+'</div>'+
+      (title?'<div class="hq">'+esc(title)+'</div>':'')+'</div></div>';
+  }
+  if(e.kind==='VERDICT'){
+    var v=ST[e.verdict]||[e.verdict,''], ok=e.verdict==='confirmed'?' ok':e.verdict==='refuted'?' no':'';
+    return '<div class="ev vd'+ok+'">'+tm+'<div class="bd"><div class="l1">'+who+'<span>'+esc(e.symbol)+' 가설 판정</span><span class="amt">'+stChip(e.verdict)+'</span></div>'+
+      (title?'<div class="hq">'+esc(title)+'</div>':'')+
+      (e.lesson?'<div class="lesson"><span class="lb">교훈</span>'+esc(e.lesson)+'</div>':'')+
+      (H&&H.linked_pl_krw!=null?'<div class="l2 num">연결 손익 <span class="'+cls(H.linked_pl_krw)+'">'+swon(H.linked_pl_krw)+'</span></div>':'')+'</div></div>';
+  }
+  if(e.kind==='SUBMIT'){
+    return '<div class="ev">'+tm+'<div class="bd"><div class="l1">'+who+'<span>'+esc(e.symbol)+' '+(e.side==='BUY'?'매수':'매도')+' 주문 접수</span></div>'+
+      '<div class="l2">장중이면 바로 체결, 장외면 다음 정규장 시가</div>'+(title?'<div class="hq">'+esc(title)+'</div>':'')+'</div></div>';
+  }
+  if(e.kind==='AMEND'){
+    var ch=Object.keys(e.changes||{}).map(function(k){return {check_by:'확인 시점',confirm_if:'맞으면',refute_if:'틀리면'}[k]||k;}).join(', ');
+    return '<div class="ev">'+tm+'<div class="bd"><div class="l1">'+who+'<span>'+esc(e.symbol)+' 가설 수정</span></div>'+
+      '<div class="l2">'+esc(ch)+' 변경 · '+esc(e.reason||'')+'</div>'+(title?'<div class="hq">'+esc(title)+'</div>':'')+'</div></div>';
+  }
+  if(e.kind==='REJECT'){
+    var foul=e['class']?e['class']==='foul':/^(규칙 2 위반|복기 필요)/.test(e.why||'');
+    var what={FILE:'주문 파일',VERDICT:'판정',AMEND:'가설 수정',BUY:'매수',SELL:'매도'}[e.side]||'주문';
+    return '<div class="ev'+(foul?' foul':'')+'">'+tm+'<div class="bd"><div class="l1">'+who+'<span>'+(e.symbol?esc(e.symbol)+' ':'')+what+(foul?' 반칙':' 반려')+'</span>'+
+      (foul?'<span class="amt"><span class="chip warn">반칙</span></span>':'')+'</div>'+
+      '<div class="l2">'+esc(e.why||'')+(foul?'':' · 고쳐서 다시 제출하면 됩니다')+'</div></div></div>';
+  }
+  if(e.kind==='LESSON'){
+    return '<div class="ev">'+tm+'<div class="bd"><div class="l1">'+who+'<span>교훈 기록</span></div><div class="lesson">'+esc(e.lesson||'')+'</div></div></div>';
+  }
+  if(e.kind==='EXPIRE'){
+    return '<div class="ev">'+tm+'<div class="bd"><div class="l1">'+who+'<span>'+esc(e.symbol)+' 가설 기한 만료</span></div>'+(title?'<div class="hq">'+esc(title)+'</div>':'')+'</div></div>';
+  }
+  return '';
+}
+
+/* ---------- 중계 ---------- */
+function filters(base,cur){
+  var h='<div class="filters" role="tablist"><a href="'+base+'all" class="'+(cur==='all'?'on':'')+'"><span>전체</span></a>';
+  (D.players||[]).forEach(function(p){h+='<a href="'+base+esc(p.id)+'" class="'+(cur===p.id?'on':'')+'"><span>'+esc(p.name)+'</span></a>';});
+  return h+'</div>';
+}
+function feed(pid){
+  pid=pid||'all';
+  var evs=(D.events||[]).filter(function(e){return pid==='all'||e.player===pid;}).slice().reverse();
+  var h='<div class="view"><div class="top"><h1>중계</h1>'+mktPill()+'</div>'+filters('#/feed/',pid);
+  if(!evs.length) return h+'<div class="empty">아직 기록이 없어요</div></div>';
+  var last='';
+  evs.slice(0,200).forEach(function(e){var d=kday(e.time);if(d!==last){h+='<div class="day">'+dayLabel(d)+'</div>';last=d;}h+=evRow(e,true);});
+  var ec=D.earnings_confirmed||[];
+  return h+'</div>';
+}
+
+/* ---------- 차트 ---------- */
+function smooth(pts){
+  if(pts.length<2) return pts.length?'M'+pts[0][0]+','+pts[0][1]:'';
+  var d='M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1);
+  for(var i=0;i<pts.length-1;i++){
+    var p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2, t=.18;
+    var c1x=p1[0]+(p2[0]-p0[0])*t, c1y=p1[1]+(p2[1]-p0[1])*t, c2x=p2[0]-(p3[0]-p1[0])*t, c2y=p2[1]-(p3[1]-p1[1])*t;
+    var lo=Math.min(p1[1],p2[1]), hi=Math.max(p1[1],p2[1]); c1y=Math.max(lo,Math.min(hi,c1y)); c2y=Math.max(lo,Math.min(hi,c2y));
+    d+='C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+  }
+  return d;
+}
+function chart(p){
+  var hist=(p.equity_hist||[]).filter(function(x){return x.krw;});
+  var start=(D.league&&D.league.start_krw)||1e7;
+  if(hist.length<2) return '<div class="card empty" style="margin-top:16px">첫 거래일이 지나면 자산 그래프가 그려져요</div>';
+  var q=(D.bench_hist&&D.bench_hist.QQQ)||[], q0=q.length?q[0].close:null, qmap={};
+  q.forEach(function(x){qmap[x.date]=x.close;});
+  var ser=hist.map(function(x){var qc=qmap[x.date];return {d:x.date,v:x.krw,q:(q0&&qc)?start*qc/q0:null};});
+  var W=390,H=200,padT=28,padB=12, all=[];
+  ser.forEach(function(s){all.push(s.v);if(s.q)all.push(s.q);});
+  var lo=Math.min.apply(null,all), hi=Math.max.apply(null,all), r=(hi-lo)||hi*0.01; lo-=r*.08; hi+=r*.08;
+  var X=function(i){return 20+i*(W-40)/(ser.length-1);}, Y=function(v){return padT+(hi-v)/(hi-lo)*(H-padT-padB);};
+  var pts=ser.map(function(s,i){return [X(i),Y(s.v)];}), qp=ser.filter(function(s){return s.q;}).map(function(s){return [X(ser.indexOf(s)),Y(s.q)];});
+  var col=esc(p.color||'#8A909B'), last=pts[pts.length-1], up=ser[ser.length-1].v>=start;
+  var line=up?'var(--up)':'var(--down)';
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="자산 추이 그래프">'+
+    '<line x1="20" x2="'+(W-20)+'" y1="'+Y(start).toFixed(1)+'" y2="'+Y(start).toFixed(1)+'" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 4" vector-effect="non-scaling-stroke"/>'+
+    (qp.length>1?'<path d="'+smooth(qp)+'" fill="none" stroke="var(--t3)" stroke-opacity=".7" stroke-width="1.25" vector-effect="non-scaling-stroke"/>':'')+
+    '<path d="'+smooth(pts)+'" fill="none" stroke="'+line+'" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
+    '<circle cx="'+last[0].toFixed(1)+'" cy="'+last[1].toFixed(1)+'" r="3.5" fill="'+line+'"/>'+
+    '<g class="cur" style="display:none"><line y1="'+padT+'" y2="'+(H-padB)+'" stroke="var(--t3)" stroke-width="1" vector-effect="non-scaling-stroke"/><circle r="4" fill="'+line+'" stroke="var(--bg)" stroke-width="2"/></g></svg>';
+  window.__chart={ser:ser,X:X,Y:Y,W:W};
+  return '<div class="chart" id="chart">'+svg+'<div class="tip num" id="tip"></div></div>'+
+    '<div class="legend"><span><i style="background:'+line+'"></i>총자산</span>'+(qp.length>1?'<span><i style="background:var(--t3)"></i>QQQ 같은 기간 (1천만원 기준)</span>':'')+'</div>';
+}
+function bindChart(){
+  var el=document.getElementById('chart'); if(!el||!window.__chart) return;
+  var C=window.__chart, svg=el.querySelector('svg'), cur=svg.querySelector('.cur'), tip=document.getElementById('tip');
+  function at(clientX){
+    var r=svg.getBoundingClientRect(), x=(clientX-r.left)/r.width*C.W, n=C.ser.length;
+    var i=Math.max(0,Math.min(n-1,Math.round((x-20)/((C.W-40)/(n-1))))), s=C.ser[i];
+    cur.style.display=''; cur.querySelector('line').setAttribute('x1',C.X(i)); cur.querySelector('line').setAttribute('x2',C.X(i));
+    var c=cur.querySelector('circle'); c.setAttribute('cx',C.X(i)); c.setAttribute('cy',C.Y(s.v));
+    var px=C.X(i)/C.W*r.width; tip.style.left=Math.max(70,Math.min(r.width-70,px))+'px';
+    var dd=s.d.split('-');
+    tip.innerHTML=(+dd[1])+'/'+(+dd[2])+' · '+won(s.v)+(s.q?' <span class="t3">QQQ '+won(s.q)+'</span>':'');
+    el.classList.add('scrub');
+  }
+  function end(){cur.style.display='none';el.classList.remove('scrub');}
+  el.addEventListener('pointerdown',function(e){at(e.clientX);});
+  el.addEventListener('pointermove',function(e){if(e.pointerType==='mouse'||e.buttons||e.pressure)at(e.clientX);});
+  el.addEventListener('pointerup',end);el.addEventListener('pointerleave',end);el.addEventListener('pointercancel',end);
+}
+
+/* ---------- 가설 카드 ---------- */
+function hypCard(h){
+  var dd=dday(h.check_by), live=h.status==='open'||h.status==='pending_fill';
+  var dchip=live&&dd!=null?'<span class="chip'+(dd<0?' warn':'')+'">'+(dd>0?'D-'+dd:dd===0?'D-day':'기한 지남')+'</span>':'';
+  var x='<article class="hyp"><div class="hd"><span class="sym">'+esc(h.symbol)+' · '+esc(h.id)+'</span><span class="chips">'+dchip+stChip(h.status)+'</span></div>'+
+    '<h3>'+esc(h.scenario||'')+'</h3>'+
+    '<div class="ln"><b>맞으면</b><span>'+esc(h.confirm_if||'')+'</span></div>'+
+    '<div class="ln"><b>틀리면</b><span>'+esc(h.refute_if||'')+'</span></div>'+
+    '<div class="ln"><b>확인</b><span class="num">'+esc(h.check_by||'')+'</span></div>';
+  if(h.why) x+='<details><summary>근거 보기</summary><div class="body">'+esc(h.why)+'</div></details>';
+  var am=h.amendments||[];
+  if(am.length){
+    x+='<details><summary>수정 이력 '+am.length+'회 · 원문 보존</summary><div class="body">';
+    am.forEach(function(a){
+      x+='<div class="amend"><div class="t3 num">'+kday(a.time)+' '+hm(a.time,KST)+' KST · '+esc(a.reason||'')+'</div>';
+      Object.keys(a.changes||{}).forEach(function(k){var c=a.changes[k];
+        x+='<div>'+({check_by:'확인',confirm_if:'맞으면',refute_if:'틀리면'}[k]||k)+': <span class="old">'+esc(c.from)+'</span> → '+esc(c.to)+'</div>';});
+      x+='</div>';
+    });
+    x+='</div></details>';
+  }
+  var closed=h.status==='confirmed'||h.status==='refuted'||h.status==='expired';
+  if(closed&&(h.evidence||h.lesson)){
+    x+='<div class="res">'+(h.evidence?'<div class="lb">판정 근거</div><div>'+esc(h.evidence)+'</div>':'')+
+      (h.lesson?'<div class="lb" style="margin-top:8px">교훈</div><div>'+esc(h.lesson)+'</div>':'')+'</div>';
+  }
+  if(h.status==='expired'&&!h.lesson_id) x+='<div class="note-warn"><i></i>교훈을 쓰기 전까지 새 매수가 막혀요</div>';
+  x+='<div class="ft num"><span>시작 '+esc(h.open_date||'')+(h.learned_from&&h.learned_from.length?' · 참고 교훈 '+esc(h.learned_from.join(', ')):'')+'</span>'+
+     (h.linked_pl_krw!=null&&h.status!=='pending_fill'?'<span class="'+cls(h.linked_pl_krw)+'">'+swon(h.linked_pl_krw)+'</span>':'')+'</div></article>';
+  return x;
+}
+
+/* ---------- 선수 페이지 ---------- */
+function pPage(id,tab){
+  var p=player(id); if(!p||!p.equity_hist) return '<div class="view"><div class="empty">선수를 찾을 수 없어요</div></div>';
+  tab=tab||'open';
+  var h='<div class="view"><div class="top"><a class="back" href="#/" aria-label="뒤로">'+ICON.back+'</a>'+mktPill()+'</div>';
+  h+='<div class="ph"><div class="who">'+mono(p,'s')+'<span>'+esc(p.name)+'</span>'+((D.events||[]).some(function(e){return e.kind==='FILL';})?'<span class="t3">· '+p.rank+'위</span>':'')+'</div>'+
+     '<div class="eq num">'+won(p.equity_krw)+'</div>'+
+     '<div class="pl num '+cls(p.pl_krw)+'">'+swon(p.pl_krw)+' ('+pct(p.return_krw_pct)+')</div>'+
+     '<div class="vs num">QQQ 대비 '+(p.vs_qqq_pct==null?'—':pct(p.vs_qqq_pct))+' · 현금 '+won(p.cash_krw)+'</div></div>';
+  h+=chart(p);
+  h+='<div class="stats num">'+
+     '<div><div class="lb">Profit Factor</div><div class="v">'+pfTxt(p.profit_factor)+'</div></div>'+
+     '<div><div class="lb">적중률</div><div class="v">'+(p.hit_rate_pct==null?'—':Math.round(p.hit_rate_pct)+'%')+'</div></div>'+
+     '<div><div class="lb">손익비</div><div class="v">'+(p.payoff_ratio==null?'—':Number(p.payoff_ratio).toFixed(2))+'</div></div>'+
+     '<div><div class="lb">최대 낙폭</div><div class="v">'+pct(p.max_drawdown_pct)+'</div></div>'+
+     '<div><div class="lb">최대 수익</div><div class="v '+cls(p.biggest_win_krw)+'">'+swon(p.biggest_win_krw)+'</div></div>'+
+     '<div><div class="lb">최대 손실</div><div class="v '+cls(p.biggest_loss_krw)+'">'+swon(p.biggest_loss_krw)+'</div></div></div>';
+  if((p.needs_review||[]).length) h+='<div class="note-warn"><i></i>기한이 지난 가설 '+p.needs_review.length+'개('+esc(p.needs_review.join(', '))+')에 교훈을 쓰기 전까지 새 매수가 막혀요</div>';
+  // 보유
+  h+='<section class="sec"><div class="sec-h"><h2>보유 종목</h2><span class="t3 num">'+(p.holdings||[]).length+'개</span></div>';
+  if(!(p.holdings||[]).length) h+='<div class="empty">보유 종목이 없어요</div>';
+  (p.holdings||[]).forEach(function(x){
+    var pl=x.value_krw*(x.pl_pct/(100+x.pl_pct));
+    h+='<div class="row"><span class="tick">'+esc(String(x.symbol).slice(0,4))+'</span><div class="main"><div class="nm">'+esc(x.name||x.symbol)+'</div>'+
+       '<div class="sub num">'+esc(x.symbol)+' · '+n0(x.shares)+'주 · 평균 $'+Number(x.avg_cost||0).toFixed(2)+'</div></div>'+
+       '<div class="rt"><div class="nm num" style="font-size:15px">'+won(x.value_krw)+'</div><div class="sm num '+cls(x.pl_pct)+'">'+swon(pl)+' ('+pct(x.pl_pct)+')</div></div></div>';
+  });
+  if((p.pending||[]).length){
+    h+='<div class="sec-h" style="margin-top:16px"><h2 style="font-size:15px">체결 대기</h2></div>';
+    p.pending.forEach(function(o){h+='<div class="row" style="min-height:52px"><span class="tick">'+esc(String(o.symbol).slice(0,4))+'</span><div class="main"><div class="nm" style="font-size:15px">'+esc(o.symbol)+' '+(o.side==='BUY'?'매수':'매도')+'</div><div class="sub">'+esc(o.submit_date)+' 접수 · 장이 열리면 체결</div></div></div>';});
+  }
+  h+='</section>';
+  // 가설
+  var mine=(D.hypotheses||[]).filter(function(x){return x.player===p.id&&x.status!=='cancelled';});
+  var op=mine.filter(function(x){return x.status==='open'||x.status==='pending_fill';}), cl=mine.filter(function(x){return op.indexOf(x)<0;});
+  var list=tab==='closed'?cl:op;
+  h+='<section class="sec"><div class="sec-h"><h2>가설</h2><span class="t3 num">맞음 '+(p.n_confirmed||0)+' · 틀림 '+(p.n_refuted||0)+'</span></div>'+
+     '<div class="seg"><a href="#/p/'+esc(p.id)+'/open" class="'+(tab!=='closed'?'on':'')+'">진행중 '+op.length+'</a><a href="#/p/'+esc(p.id)+'/closed" class="'+(tab==='closed'?'on':'')+'">종료 '+cl.length+'</a></div>';
+  h+=list.length?list.slice().reverse().map(hypCard).join(''):'<div class="empty">'+(tab==='closed'?'종료된 가설이 없어요':'진행 중인 가설이 없어요')+'</div>';
+  h+='</section>';
+  // 교훈
+  var ls=(D.lessons||[]).filter(function(l){return l.player===p.id;}).slice().reverse();
+  h+='<section class="sec"><div class="sec-h"><h2>교훈</h2><a class="t3" href="#/notes/'+esc(p.id)+'">오답노트</a></div>';
+  h+=ls.length?ls.slice(0,3).map(function(l){return lessonRow(l,true);}).join(''):'<div class="empty">아직 교훈이 없어요</div>';
+  return h+'</section></div>';
+}
+
+/* ---------- 오답노트 ---------- */
+function lessonRow(l,noWho){
+  var p=player(l.player), H=l.hypothesis_id?hyp(l.hypothesis_id):null;
+  var v=l.verdict?stChip(l.verdict):'<span class="chip">메모</span>';
+  return '<div class="lsn"><div class="hd">'+(noWho?'':mono(p,'s')+'<span>'+esc(p.name)+'</span><span>·</span>')+'<span class="num">'+esc(l.date)+'</span>'+
+    '<span style="margin-left:auto" class="chips">'+(l.symbol?'<span class="chip">'+esc(l.symbol)+'</span>':'')+v+'</span></div>'+
+    '<p>'+esc(l.text)+'</p>'+(l.scenario?'<div class="sc">가설 · '+esc(l.scenario)+'</div>':'')+
+    (H&&H.linked_pl_krw!=null?'<div class="sc num">연결 손익 <span class="'+cls(H.linked_pl_krw)+'">'+swon(H.linked_pl_krw)+'</span></div>':'')+'</div>';
+}
+function notes(pid){
+  pid=pid||'all';
+  var ls=(D.lessons||[]).filter(function(l){return pid==='all'||l.player===pid;}).slice().reverse();
+  return '<div class="view"><div class="top"><h1>오답노트</h1></div><p class="meta">가설을 닫을 때 남긴 교훈입니다. 다른 선수의 교훈도 함께 봅니다.</p>'+
+    filters('#/notes/',pid)+(ls.length?ls.map(function(l){return lessonRow(l,pid!=='all');}).join(''):'<div class="empty">아직 교훈이 없어요</div>')+'</div>';
+}
+
+/* ---------- 규칙 ---------- */
+function rules(){
+  var r=D.rules||[], ec=D.engine_conditions||[], er=D.earnings_confirmed||[];
+  var h='<div class="view"><div class="top"><h1>규칙</h1></div>';
+  h+='<section class="sec" style="margin-top:16px"><div class="lb t3" style="font-size:12px">규칙 1</div><p class="big-rule">'+esc((r[0]||'').replace(/^1\.\s*/,''))+'</p>'+
+     '<div class="lb t3" style="font-size:12px;margin-top:16px">규칙 2</div><p class="big-rule" style="font-size:17px">'+esc((r[1]||'').replace(/^2\.\s*/,''))+'</p></section>';
+  if(er.length){
+    h+='<section class="sec"><div class="sec-h"><h2>확정 실적일</h2><span class="t3">심판 확인 · 회사 공지 기준</span></div>';
+    er.forEach(function(e){var d=e.date.split('-');
+      h+='<a class="erow" href="'+esc(e.source)+'" target="_blank" rel="noopener"><span><b>'+esc(e.symbol)+'</b> <span class="sub">'+esc(e.period)+'</span></span>'+
+         '<span class="num">'+(+d[1])+'월 '+(+d[2])+'일 '+esc(e.when)+' <span class="sub">'+esc(e.session)+'</span></span></a>';});
+    h+='</section>';
+  }
+  h+='<section class="sec"><div class="sec-h"><h2>엔진 조건</h2></div><ul class="rl">'+ec.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></section>';
+  h+='<section class="sec"><div class="sec-h"><h2>점수</h2></div><ul class="rl">'+
+     '<li>순위는 Profit Factor(총이익 ÷ 총손실)로 정합니다.</li>'+
+     '<li>모든 매수에는 가설(시나리오, 근거, 확인 시점, 맞으면, 틀리면)이 있어야 합니다. 판정은 가격이 아니라 시나리오가 실제로 일어났는지로 합니다.</li>'+
+     '<li>가설을 닫을 때는 교훈을 남깁니다. 기한이 지난 가설에 교훈이 없으면 새 매수가 막힙니다.</li>'+
+     '<li>진행 중인 가설은 이유를 적고 수정할 수 있습니다. 원문과 수정 이력은 그대로 남습니다.</li></ul></section>';
+  h+='<p class="disc">모의투자 · 가상 1천만원 · 실제 돈 아님. 투자 권유가 아닙니다. 시세는 Yahoo 기준이며 늦거나 바뀔 수 있습니다.<br>'+updLine()+'</p></div>';
+  return h;
+}
+
+/* ---------- 라우터 ---------- */
+function render(keep){
+  var r=(location.hash||'#/').slice(2).split('/'), h, tab='home';
+  if(r[0]==='p'){h=pPage(decodeURIComponent(r[1]||''),r[2]);tab='';}
+  else if(r[0]==='feed'){h=feed(r[1]);tab='feed';}
+  else if(r[0]==='rules'){h=rules();tab='rules';}
+  else if(r[0]==='notes'){h=notes(r[1]);tab='notes';}
+  else h=home();
+  window.__chart=null;
+  app.innerHTML=h;
+  if(keep){var v=app.querySelector('.view');if(v)v.style.animation='none';}
+  bindChart();
+  [].forEach.call(document.querySelectorAll('.tabbar a'),function(a){var on=a.getAttribute('data-tab')===tab;a.className=on?'on':'';if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(!keep) window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',function(){if(D)render();});
+if('serviceWorker' in navigator && !window.__LEAGUE_DATA__ && location.protocol.indexOf('http')===0){navigator.serviceWorker.register('sw.js').catch(function(){});}
+if(window.__LEAGUE_DATA__){D=window.__LEAGUE_DATA__;render();}
+else{
+  var q=new URLSearchParams(location.search), src=q.get('data')||'data.json';
+  if(!/^[\w.\-]+\.json$/.test(src)) src='data.json';
+  var load=function(first){
+    return fetch(src+'?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+      if(first||!D||d.generated_at!==D.generated_at){var y=window.scrollY;D=d;render(!first);if(!first)window.scrollTo(0,y);}else liveBar();
+    });
+  };
+  load(true).catch(function(){app.innerHTML='<div class="view"><div class="empty">데이터를 불러오지 못했어요. 잠시 후 다시 열어 주세요.</div></div>';});
+  setInterval(function(){load(false).catch(liveBar);},60000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&D)load(false).catch(function(){});});
+}
+})();
+</script>
+</body>
+</html>
